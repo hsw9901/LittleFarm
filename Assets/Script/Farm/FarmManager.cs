@@ -1,5 +1,4 @@
-﻿// Scripts/Farm/FarmManager.cs
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Tilemaps;
 
@@ -17,6 +16,10 @@ public class FarmManager : MonoBehaviour
 
     private Dictionary<Vector2Int, FarmTileData> _tiles = new();
 
+    private void Start()
+    {
+        TimeManager.Inst.OnDayChanged += ProcessNextDay;
+    }
     private void Awake()
     {
         if (Inst != null) return;
@@ -49,8 +52,33 @@ public class FarmManager : MonoBehaviour
     private FarmTileData GetOrCreateTile(Vector2Int pos)
     {
         if (_tiles.ContainsKey(pos) == false)
-            _tiles.Add(pos, new FarmTileData { gridPos = pos });
+            _tiles.Add(pos, new FarmTileData { GridPos = pos });
 
         return _tiles[pos];
+    }
+
+    private void ProcessNextDay()
+    {
+        foreach (var kvp in _tiles) 
+        { 
+            FarmTileData tile = kvp.Value;
+
+            if(tile.state == TileState.Watered)
+            {
+                tile.Moisture = 0;
+
+                if (!string.IsNullOrEmpty(tile.CropId))
+                {
+                    tile.DaysGrown++;
+                }
+
+                FarmLayer.SetTile((Vector3Int)tile.GridPos, TilledTile);
+                tile.state = TileState.Tilled;
+            }
+            else if (tile.state == TileState.Tilled)
+            {
+                //물이 없는 타일의 작물은 성장하지 않음
+            }
+        }
     }
 }
