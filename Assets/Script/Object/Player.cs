@@ -37,6 +37,10 @@ public class Player : MonoBehaviour
         {
             InteractWithTile();
         }
+        if (Input.GetKeyDown(KeyCode.G))
+        {
+            InteractWithTilee();
+        }
     }
 
     private void FixedUpdate()
@@ -102,5 +106,12 @@ public class Player : MonoBehaviour
         Vector3 targetPos = currentPos;
         Vector2Int gridPos = FarmManager.Inst.GetGridPosition(targetPos);
         FarmManager.Inst.RequestTillTile(gridPos);
+    }
+    private void InteractWithTilee()
+    {
+        Vector3 currentPos = transform.position;
+        Vector3 targetPos = currentPos;
+        Vector2Int gridPos = FarmManager.Inst.GetGridPosition(targetPos);
+        FarmManager.Inst.RequestWaterTile(gridPos);
     }
 }
