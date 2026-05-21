@@ -33,6 +33,10 @@ public class Player : MonoBehaviour
         GetInput();
         CheckFilp();
         UpdatePlayerState();
+        if (Input.GetKeyDown(KeyCode.F))
+        {
+            InteractWithTile();
+        }
     }
 
     private void FixedUpdate()
@@ -90,5 +94,13 @@ public class Player : MonoBehaviour
     private void ChangePlayerState(Player_AnimState newState)
     {
         AnimatorController_Player.SetState(newState);
+    }
+
+    private void InteractWithTile()
+    {
+        Vector3 currentPos = transform.position;
+        Vector3 targetPos = currentPos;
+        Vector2Int gridPos = FarmManager.Inst.GetGridPosition(targetPos);
+        FarmManager.Inst.RequestTillTile(gridPos);
     }
 }

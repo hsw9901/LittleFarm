@@ -49,6 +49,12 @@ public class FarmManager : MonoBehaviour
         Debug.Log($"[FarmManager] {pos} 경작 완료");
     }
 
+    public Vector2Int GetGridPosition(Vector3 worldPos)
+    {
+        Vector3Int cellPos = GroundLayer.WorldToCell(worldPos);
+        return (new Vector2Int(cellPos.x, cellPos.y));
+    }
+
     private FarmTileData GetOrCreateTile(Vector2Int pos)
     {
         if (_tiles.ContainsKey(pos) == false)
