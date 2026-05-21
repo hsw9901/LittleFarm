@@ -34,6 +34,7 @@ public class TimeManager : MonoBehaviour
         {
             Minute = 0;
             Hour++;
+
             if(Hour >= 24)
             {
                 Hour = 0;
