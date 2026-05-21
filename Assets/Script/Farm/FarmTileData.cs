@@ -1,16 +1,7 @@
 ﻿using System;
 using UnityEngine;
 
-public enum TileState
-{
-    None = 0,
-    Empty,
-    Tilled,
-    Watered,
-    Seeded,
-    Growing,
-    CanHarvest
-}
+
 
 [Serializable]
 public class FarmTileData

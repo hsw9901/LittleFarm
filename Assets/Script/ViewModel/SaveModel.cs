@@ -10,7 +10,7 @@ public class SaveModel
 [Serializable]
 public class TimeSaveData
 {
-    public int Season = 1;
+    public int Season;
     public int Day = 1;
     public int Hour = 6;
     public int Minute = 0;

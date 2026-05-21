@@ -1,11 +1,5 @@
 ﻿using UnityEngine;
-public enum Player_AnimState
-{
-    None = 0,
-    Idle,
-    Walk,
-    Run
-}
+
 public class AnimatorController : MonoBehaviour
 {
     [SerializeField] private Animator Animator_Player;

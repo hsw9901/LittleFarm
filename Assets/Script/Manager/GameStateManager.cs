@@ -1,18 +1,10 @@
 ﻿using System;
 using UnityEngine;
 
-public enum GameState
-{
-    MainMenu,
-    Loading,
-    Playing,
-    Paused
-}
+
 
 public class GameStateManager : MonoBehaviour
 {
-    
-
     public static GameStateManager Inst { get; private set; }
 
     public GameState CurrentState { get; private set; } = GameState.MainMenu;

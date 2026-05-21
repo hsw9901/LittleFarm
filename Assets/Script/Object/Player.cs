@@ -15,6 +15,7 @@ public class Player : MonoBehaviour
     private Vector2 _moveInput;
     private bool _isRunning;
     private bool _lookRight = true;
+    public ToolType CurrentTool = ToolType.Hoe;
 
     private void Awake()
     {
@@ -33,13 +34,13 @@ public class Player : MonoBehaviour
         GetInput();
         CheckFilp();
         UpdatePlayerState();
+
+        if (Input.GetKeyDown(KeyCode.Alpha1)) CurrentTool = ToolType.Hoe;
+        if (Input.GetKeyDown(KeyCode.Alpha2)) CurrentTool = ToolType.Wateringcan;
+
         if (Input.GetKeyDown(KeyCode.F))
         {
             InteractWithTile();
-        }
-        if (Input.GetKeyDown(KeyCode.G))
-        {
-            InteractWithTilee();
         }
     }
 
@@ -100,18 +101,25 @@ public class Player : MonoBehaviour
         AnimatorController_Player.SetState(newState);
     }
 
+   
     private void InteractWithTile()
     {
         Vector3 currentPos = transform.position;
+        float interactDistance = 1.0f;
         Vector3 targetPos = currentPos;
+        targetPos.x += _lookRight ? interactDistance : -interactDistance;
+
         Vector2Int gridPos = FarmManager.Inst.GetGridPosition(targetPos);
-        FarmManager.Inst.RequestTillTile(gridPos);
-    }
-    private void InteractWithTilee()
-    {
-        Vector3 currentPos = transform.position;
-        Vector3 targetPos = currentPos;
-        Vector2Int gridPos = FarmManager.Inst.GetGridPosition(targetPos);
-        FarmManager.Inst.RequestWaterTile(gridPos);
+        
+        switch (CurrentTool)
+        {
+            case ToolType.Hoe:
+                FarmManager.Inst.RequestTillTile(gridPos);
+                break;
+            case ToolType.Wateringcan:
+                FarmManager.Inst.RequestWaterTile(gridPos);
+                break;
+
+        }
     }
 }
