@@ -9,7 +9,13 @@ public class TimeManager : MonoBehaviour
     public int Minute { get; private set; }
     public int Day { get; private set; }
     public int Season { get; private set; }
-    private float _timer; 
+    private float _timer;
+
+    private void Awake()
+    {
+        Inst = this;
+
+    }
 
     private void Update()
     {

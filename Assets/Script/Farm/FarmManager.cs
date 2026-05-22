@@ -27,7 +27,6 @@ public class FarmManager : MonoBehaviour
     }
     private void Awake()
     {
-        if (Inst != null) return;
         Inst = this;
     }
 

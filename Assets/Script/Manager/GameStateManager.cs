@@ -1,8 +1,6 @@
 ﻿using System;
 using UnityEngine;
 
-
-
 public class GameStateManager : MonoBehaviour
 {
     public static GameStateManager Inst { get; private set; }

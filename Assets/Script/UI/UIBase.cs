@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-public abstract class FarmUIBase : MonoBehaviour
+public abstract class UIBase : MonoBehaviour
 {
     protected virtual void Awake() { }
     public virtual void OnOpen() { }

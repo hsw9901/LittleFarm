@@ -37073,12 +37073,12 @@ TextureImporter:
       name: output_tileset_1680
       rect:
         serializedVersion: 2
-        x: 900
-        y: 360
-        width: 20
-        height: 20
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+        x: 901
+        y: 362
+        width: 16
+        height: 16
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []

@@ -1,0 +1,25 @@
+﻿using System;
+using System.Collections.Generic;
+using UnityEngine;
+
+[Serializable]
+public class PlayerModel
+{
+    public string PlayerName = "새농부";
+    public int Gold = 500;
+    public int CurrentStamina = 100;
+    public int MaxStamina = 100;
+    public Vector3 LastPosition = Vector3.zero;
+
+    public List<ItemModel> Inventory = new List<ItemModel>();
+    
+    public PlayerModel()
+    {
+        int maxSlots = 36;
+
+        for (int i = 0; i < maxSlots; i++)
+        {
+            Inventory.Add(new ItemModel { ItemDataId = "", ItemStackCount = 0 });
+        }
+    }
+}

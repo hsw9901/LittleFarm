@@ -2,15 +2,31 @@
 
 public class UIManager : MonoBehaviour
 {
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
+    public static UIManager Inst { get; private set; }
+
+    [Header("UI 패널 연결")]
+    [SerializeField] private GameObject InventoryPanel; 
+
+    private void Awake()
     {
-        
+        Inst = this;
     }
 
-    // Update is called once per frame
-    void Update()
+    private void Update()
     {
-        
+        if (Input.GetKeyDown(KeyCode.Tab))
+        {
+            ToggleInventory();
+        }
+    }
+
+    public void ToggleInventory()
+    {
+        if (InventoryPanel != null)
+        {
+            bool isActive = InventoryPanel.activeSelf;
+
+            InventoryPanel.SetActive(!isActive);
+        }
     }
 }

@@ -5,8 +5,11 @@ using System.Collections.Generic;
 [Serializable]
 public class SaveModel 
 {
-    public TimeSaveData TimeData;
+    public TimeSaveData TimeData = new TimeSaveData();
+    public PlayerModel PlayerData = new PlayerModel();
+    public FarmSaveData FarmData = new FarmSaveData();
 }
+
 [Serializable]
 public class TimeSaveData
 {
@@ -15,11 +18,7 @@ public class TimeSaveData
     public int Hour = 6;
     public int Minute = 0;
 }
-[Serializable]
-public class PlayerSaveData
-{
-    public Vector3 Position;
-}
+
 [Serializable]
 public class FarmSaveData
 {
