@@ -56,10 +56,10 @@ MonoBehaviour:
   m_ChildAlignment: 4
   m_StartCorner: 0
   m_StartAxis: 0
-  m_CellSize: {x: 130, y: 130}
-  m_Spacing: {x: 15, y: 0}
+  m_CellSize: {x: 120, y: 120}
+  m_Spacing: {x: 8, y: 0}
   m_Constraint: 1
-  m_ConstraintCount: 12
+  m_ConstraintCount: 10
 --- !u!1 &7343953734559258918
 GameObject:
   m_ObjectHideFlags: 0
@@ -96,7 +96,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0}
   m_AnchorMax: {x: 0.5, y: 0}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 1750, y: 200}
+  m_SizeDelta: {x: 1300, y: 150}
   m_Pivot: {x: 0.5, y: 0}
 --- !u!222 &394498711988991005
 CanvasRenderer:
@@ -120,7 +120,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Image
   m_Material: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 0}
-  m_RaycastTarget: 1
+  m_RaycastTarget: 0
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
@@ -173,7 +173,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 0}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 200}
+  m_SizeDelta: {x: 0, y: 150}
   m_Pivot: {x: 0.5, y: 0}
 --- !u!222 &7733493179988144215
 CanvasRenderer:
@@ -203,7 +203,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: -1922084406, guid: 7b71f7e2e4e9c7440a584105282056d8, type: 3}
+  m_Sprite: {fileID: 322831512, guid: 3f78adc3feba79041a80713cecec1341, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -227,4 +227,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::HotbarUI
   Prefab_Slot: {fileID: 7257238194680475428, guid: 66838bedbafd65f4db8562f3ed6f3ef3, type: 3}
   Transform_HotbarRoot: {fileID: 5407511599321908508}
-  HotbarSlotCount: 12
+  HotbarSlotCount: 10

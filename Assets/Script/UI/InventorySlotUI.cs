@@ -60,7 +60,7 @@ public class InventorySlotUI : MonoBehaviour
 
     public void OnClick_SelectItem()
     {
-        if (Image_Icon.gameObject.activeSelf == false) { return; }
+        //if (Image_Icon.gameObject.activeSelf == false) { return; }
         _onSelectEvent?.Invoke(SlotInstanceId);
     }
 

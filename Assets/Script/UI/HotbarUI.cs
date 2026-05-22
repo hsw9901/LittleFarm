@@ -8,7 +8,7 @@ public class HotbarUI : MonoBehaviour
     [SerializeField] private Transform Transform_HotbarRoot; 
 
     [Header("툴바 설정")]
-    [SerializeField] private int HotbarSlotCount = 12;
+    [SerializeField] private int HotbarSlotCount = 10;
 
     private List<InventorySlotUI> _hotbarSlotList = new List<InventorySlotUI>();
     private int _currentSelectedIndex = 0; 
@@ -83,6 +83,11 @@ public class HotbarUI : MonoBehaviour
         else if (Input.GetKeyDown(KeyCode.Alpha4)) SelectSlot(3);
         else if (Input.GetKeyDown(KeyCode.Alpha5)) SelectSlot(4);
         else if (Input.GetKeyDown(KeyCode.Alpha6)) SelectSlot(5);
+        else if (Input.GetKeyDown(KeyCode.Alpha7)) SelectSlot(6);
+        else if (Input.GetKeyDown(KeyCode.Alpha8)) SelectSlot(7);
+        else if (Input.GetKeyDown(KeyCode.Alpha9)) SelectSlot(8);
+        else if (Input.GetKeyDown(KeyCode.Alpha0)) SelectSlot(9);
+
     }
     private void CheckMouseScrollInput()
     {
