@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using UnityEngine;
 
 public class HotbarUI : MonoBehaviour
@@ -22,7 +23,18 @@ public class HotbarUI : MonoBehaviour
 
     private void OnEnable()
     {
+        if (InventoryManager.Inst != null)
+        {
+            InventoryManager.Inst.OnInventoryChanged += RefreshHotbarSlots;
+        }
         RefreshHotbarSlots();
+    }
+    private void OnDisable()
+    {
+        if (InventoryManager.Inst != null)
+        {
+            InventoryManager.Inst.OnInventoryChanged -= RefreshHotbarSlots;
+        }
     }
 
     private void Update()
@@ -48,9 +60,9 @@ public class HotbarUI : MonoBehaviour
                 _hotbarSlotList.Add(slotComponent);
 
                 int index = i;
-                slotComponent.InitSlot(index);
+                slotComponent.InitSlot(i, InventoryManager.SlotArea.Hotbar);
 
-                slotComponent.BindSlotSelectEvent((id) => OnClick_HotbarSlot(index));
+                slotComponent.OnClicked = (id) => OnClick_HotbarSlot(index);
             }
         }
     }
@@ -106,7 +118,6 @@ public class HotbarUI : MonoBehaviour
             SelectSlot(nextIndex);
         }
     }
-
     private void OnClick_HotbarSlot(int index)
     {
         SelectSlot(index);

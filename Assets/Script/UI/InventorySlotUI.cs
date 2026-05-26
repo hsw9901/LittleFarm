@@ -11,7 +11,8 @@ public class InventorySlotUI : MonoBehaviour
     [SerializeField] private Image Image_Icon;
     [SerializeField] private Image Image_Selected;
 
-    private event Action<int> _onSelectEvent;
+    private InventoryManager.SlotArea _currentArea;
+    public Action<int> OnClicked;
 
     public int SlotInstanceId { get; private set; }
 
@@ -22,14 +23,12 @@ public class InventorySlotUI : MonoBehaviour
         Button_Slot.BindOnClickButtonEvent(OnClick_SelectItem);
     }
 
-    private void OnDisable()
-    {
-        _onSelectEvent = null;
-    }
-
-    public void InitSlot(int slotInstanceId)
+    
+    public void InitSlot(int slotInstanceId, InventoryManager.SlotArea area = InventoryManager.SlotArea.Main)
     {
         SlotInstanceId = slotInstanceId;
+
+        _currentArea = area;
 
         Image_Icon.gameObject.SetActive(false);
         Text_StackCount.text = "";
@@ -37,6 +36,7 @@ public class InventorySlotUI : MonoBehaviour
 
     public void UpdateSlot(ItemModel item)
     {
+
         if (item == null || string.IsNullOrEmpty(item.ItemDataId) || item.ItemStackCount <= 0)
         {
             Image_Icon.gameObject.SetActive(false);
@@ -73,13 +73,11 @@ public class InventorySlotUI : MonoBehaviour
 
     public void OnClick_SelectItem()
     {
-        //if (Image_Icon.gameObject.activeSelf == false) { return; }
-        _onSelectEvent?.Invoke(SlotInstanceId);
-    }
-
-    public void BindSlotSelectEvent(Action<int> onSelectEvent)
-    {
-        _onSelectEvent = onSelectEvent;
+        if (InventoryManager.Inst != null)
+        {
+            InventoryManager.Inst.ClickHandSlot(SlotInstanceId, _currentArea);
+        }
+        OnClicked?.Invoke(SlotInstanceId);
     }
 
     public void ChangeSelectedState(bool isSelected)

@@ -7,13 +7,11 @@ public class InventoryUI : UIBase
     [SerializeField] private Transform Transform_UISlotRoot;
     [SerializeField] private ButtonUI Button_CloseSelf;
 
-    private int _generatedKey = 0;
-    private Dictionary<int, InventorySlotUI> _itemSlotList = new();
+    private List<InventorySlotUI> _itemSlotList = new List<InventorySlotUI>();
 
     protected override void Awake()
     {
-        base.Awake(); 
-
+        base.Awake();
         if (Button_CloseSelf != null)
         {
             Button_CloseSelf.BindOnClickButtonEvent(OnClick_ClosePopup);
@@ -22,7 +20,20 @@ public class InventoryUI : UIBase
 
     private void OnEnable()
     {
+        if (InventoryManager.Inst != null)
+        {
+            InventoryManager.Inst.OnInventoryChanged += RefreshInventorySlots;
+            InventoryManager.Inst.ResetSelection(); 
+        }
         RefreshInventorySlots();
+    }
+
+    private void OnDisable()
+    {
+        if (InventoryManager.Inst != null)
+        {
+            InventoryManager.Inst.OnInventoryChanged -= RefreshInventorySlots;
+        }
     }
 
     private void RefreshInventorySlots()
@@ -40,21 +51,25 @@ public class InventoryUI : UIBase
             }
         }
 
-        int index = 0;
-        foreach (var slotkv in _itemSlotList)
-        {
-            var slotUI = slotkv.Value;
-            if (index < itemList.Count)
-            {
-                var data = itemList[index];
+        int currentSelectedId = InventoryManager.Inst.SelectedSlotId;
+        InventoryManager.SlotArea currentSelectedArea = InventoryManager.Inst.SelectedSlotArea;
 
-                slotUI.UpdateSlot(data);
+        for (int i = 0; i < _itemSlotList.Count; i++)
+        {
+            var slotUI = _itemSlotList[i];
+            slotUI.InitSlot(i, InventoryManager.SlotArea.Main);
+
+            bool amISelected = (i == currentSelectedId && currentSelectedArea == InventoryManager.SlotArea.Main);
+            slotUI.ChangeSelectedState(amISelected);
+
+            if (i < itemList.Count)
+            {
+                slotUI.UpdateSlot(itemList[i]);
             }
             else
             {
                 slotUI.UpdateSlot(null);
             }
-            index++;
         }
     }
 
@@ -68,22 +83,9 @@ public class InventoryUI : UIBase
         var slotComponent = gobj.GetComponent<InventorySlotUI>();
         if (slotComponent == null) return;
 
-        _generatedKey++;
-        gobj.name = $"ItemSlot: {_generatedKey}";
-        slotComponent.InitSlot(_generatedKey);
+        gobj.name = $"ItemSlot: {_itemSlotList.Count}";
 
-        _itemSlotList.Add(_generatedKey, slotComponent);
-        slotComponent.BindSlotSelectEvent(OnChildSlotSelected);
-    }
-
-    private void OnChildSlotSelected(int selectedSlotInstanceId)
-    {
-        foreach (var slotkv in _itemSlotList)
-        {
-            var slot = slotkv.Value;
-            bool isSlotSelected = (selectedSlotInstanceId == slot.SlotInstanceId);
-            slot.ChangeSelectedState(isSlotSelected);
-        }
+        _itemSlotList.Add(slotComponent);
     }
 
     public void OnClick_ClosePopup()
