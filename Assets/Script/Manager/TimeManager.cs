@@ -55,10 +55,18 @@ public class TimeManager : MonoBehaviour
             }
         }
     }
-
-
-
-
-
+    public TimeSaveData PackingState()
+    {
+        return new TimeSaveData { Season = this.Season, Day = this.Day, Hour = this.Hour, Minute = this.Minute };
+    }
+    public void ReloadState(TimeSaveData data)
+    {
+        if (data == null) return;
+        this.Season = data.Season;
+        this.Day = data.Day;
+        this.Hour = data.Hour;
+        this.Minute = data.Minute;
+        this._timer = 0f;
+    }
 
 }

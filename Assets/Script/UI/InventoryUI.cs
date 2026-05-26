@@ -29,9 +29,9 @@ public class InventoryUI : UIBase
 
     private void RefreshInventorySlots()
     {
-        if (GameManager.Inst == null) { return; }
+        if (InventoryManager.Inst == null) { return; }
 
-        var itemList = GameManager.Inst.GetPlayerItemList();
+        var itemList = InventoryManager.Inst.GetMainInventory();
         if (itemList == null || itemList.Count == 0) { return; }
 
         if (_itemSlotList.Count == 0)

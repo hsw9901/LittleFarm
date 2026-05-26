@@ -55,9 +55,9 @@ public class HotbarUI : MonoBehaviour
 
     public void RefreshHotbarSlots()
     {
-        if (GameManager.Inst == null) { return; }
+        if (InventoryManager.Inst == null) { return; }
 
-        var hotbarDataArray = GameManager.Inst.GetPlayerItemList();
+        var hotbarDataArray = InventoryManager.Inst.GetHotbarInventory();
         if (hotbarDataArray == null) { return; }
 
         for (int i = 0; i < _hotbarSlotList.Count; i++)

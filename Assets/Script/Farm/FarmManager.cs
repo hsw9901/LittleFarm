@@ -1,7 +1,6 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Tilemaps;
-//using static UnityEditor.PlayerSettings;
 
 public class FarmManager : MonoBehaviour
 {
@@ -20,14 +19,40 @@ public class FarmManager : MonoBehaviour
 
 
     private Dictionary<Vector2Int, FarmTileData> _tiles = new();
-
+    
+    private void Awake()
+    {
+        Inst = this;
+    }
     private void Start()
     {
         TimeManager.Inst.OnDayChanged += ProcessNextDay;
     }
-    private void Awake()
+    public FarmSaveData PackingState()
     {
-        Inst = this;
+        return new FarmSaveData { FarmTileList = new List<FarmTileData>(_tiles.Values) };
+    }
+
+    public void ReloadState(FarmSaveData data)
+    {
+        if(data == null || data.FarmTileList == null) {  return; }
+
+        _tiles.Clear();
+        FarmLayer.ClearAllTiles();
+
+        foreach (var tileData in data.FarmTileList)
+        {
+            _tiles[tileData.GridPos] = tileData;
+
+            if (tileData.state == TileState.Tilled)
+            {
+                FarmLayer.SetTile((Vector3Int)tileData.GridPos, TilledTile);
+            }
+            else if (tileData.state == TileState.Watered)
+            {
+                FarmLayer.SetTile((Vector3Int)tileData.GridPos, WetTilledTile);
+            }
+        }
     }
 
     // 호미 사용
@@ -98,17 +123,16 @@ public class FarmManager : MonoBehaviour
             {
                 tile.Moisture = 0;
                 // 하루가 흐르면 마른 땅으로 변경
-                tile.state = TileState.Tilled;
-                FarmLayer.SetTile((Vector3Int)tile.GridPos, TilledTile);
-
-
-                if (!string.IsNullOrEmpty(tile.CropId))
+                if (string.IsNullOrEmpty(tile.CropId))
+                {
+                    tile.state = TileState.Tilled;
+                    FarmLayer.SetTile((Vector3Int)tile.GridPos, TilledTile);
+                }
+                else
                 {
                     tile.DaysGrown++;
+                    tile.state = TileState.Growing;
                 }
-
-                FarmLayer.SetTile((Vector3Int)tile.GridPos, TilledTile);
-                tile.state = TileState.Tilled;
             }
             else if (tile.state == TileState.Tilled)
             {

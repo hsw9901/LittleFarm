@@ -31,9 +31,26 @@ public class SaveManager : MonoBehaviour
             Debug.Log("[FarmSaveManager] 데이터 로드 완료");
             return JsonUtility.FromJson<SaveModel>(json);
         }
-        Debug.LogWarning("[FarmSaveManager] 세이브 파일 없음 — 새 데이터 생성");
+        Debug.LogWarning("[SaveManager] 세이브 파일 없음 — 새 데이터 생성");
         return GetDefaultSaveData();
     }
 
     private SaveModel GetDefaultSaveData() => new SaveModel();
+
+    public void SaveGameFlow()
+    {
+        SaveModel currentSave = new SaveModel();
+        currentSave.TimeData = TimeManager.Inst.PackingState();
+        currentSave.FarmData = FarmManager.Inst.PackingState();
+        currentSave.PlayerData = GameManager.Inst.PackingState();
+        RequestSaveData(currentSave);
+    }
+    public void LoadGameFlow()
+    {
+        SaveModel loadedData = RequestLoadSaveData();
+        if (loadedData == null) return;
+        TimeManager.Inst.ReloadState(loadedData.TimeData);
+        FarmManager.Inst.ReloadState(loadedData.FarmData);
+        GameManager.Inst.ReloadState(loadedData.PlayerData);
+    }
 }
