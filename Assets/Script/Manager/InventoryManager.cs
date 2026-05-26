@@ -18,6 +18,7 @@ public class InventoryManager : MonoBehaviour
     private void Awake()
     {
         Inst = this;
+        InitInventory();
     }
 
     private void InitInventory()

@@ -1,7 +1,8 @@
-﻿using System;
+﻿using Cysharp.Threading.Tasks;
+using System;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
-using TMPro;
 
 public class InventorySlotUI : MonoBehaviour
 {
@@ -26,36 +27,48 @@ public class InventorySlotUI : MonoBehaviour
         _onSelectEvent = null;
     }
 
-    public void InitSlot(int slotInstanceId, string itemDataId, int itemStackCount)
+    public void InitSlot(int slotInstanceId)
     {
         SlotInstanceId = slotInstanceId;
 
-        if (string.IsNullOrEmpty(itemDataId) || itemStackCount <= 0)
+        Image_Icon.gameObject.SetActive(false);
+        Text_StackCount.text = "";
+    }
+
+    public void UpdateSlot(ItemModel item)
+    {
+        if (item == null || string.IsNullOrEmpty(item.ItemDataId) || item.ItemStackCount <= 0)
         {
             Image_Icon.gameObject.SetActive(false);
             Text_StackCount.text = "";
             return;
         }
 
-        Image_Icon.gameObject.SetActive(true);
-        SetIcon(itemDataId, itemStackCount);
+        SetIcon(item.ItemDataId).Forget();
+        Text_StackCount.text = item.ItemStackCount.ToString();
     }
 
-    public void SetIcon(string itemDataId, int itemCount)
+    public async UniTaskVoid SetIcon(string itemDataId)
     {
+        if (!GameDataManager.Inst.ItemDataList.TryGetValue(itemDataId, out ItemData data))
+        {
+            Debug.LogWarning($"데이터를 찾을 수 없습니다: {itemDataId}");
+            return;
+        }
+        string key = data.IconKey;
 
-        Sprite loadedSprite = Resources.Load<Sprite>($"Icons/{itemDataId}");
+        Sprite loadedSprite = await ResourceManager.Inst.LoadAsset<Sprite>(key);
+
+        if (this == null || Image_Icon == null)
+        {
+            return; 
+        }
 
         if (loadedSprite != null)
         {
             Image_Icon.sprite = loadedSprite;
+            Image_Icon.gameObject.SetActive(true);
         }
-        else
-        {
-            Debug.LogWarning($"[InventorySlotUI] 아이콘 이미지를 찾을 수 없습니다. 경로: Resources/Icons/{itemDataId}");
-        }
-
-        Text_StackCount.text = $"{itemCount}";
     }
 
     public void OnClick_SelectItem()

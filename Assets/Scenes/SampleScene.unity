@@ -359,8 +359,8 @@ Transform:
   m_Children:
   - {fileID: 665875755}
   - {fileID: 74518003}
-  - {fileID: 310903398}
   - {fileID: 667520471}
+  - {fileID: 310903398}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &227332326
@@ -4472,10 +4472,6 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 74518005}
     - target: {fileID: 5901198163689893986, guid: 60302e141324dcf43918fbf75f874fd0, type: 3}
-      propertyPath: TilledTile
-      value: 
-      objectReference: {fileID: 11400000, guid: 3a9e5ea55206bef448d224c308a0dbd7, type: 2}
-    - target: {fileID: 5901198163689893986, guid: 60302e141324dcf43918fbf75f874fd0, type: 3}
       propertyPath: GroundLayer
       value: 
       objectReference: {fileID: 665875757}
@@ -4483,6 +4479,14 @@ PrefabInstance:
       propertyPath: HighlightLayer
       value: 
       objectReference: {fileID: 667520473}
+    - target: {fileID: 6927069787567816573, guid: 60302e141324dcf43918fbf75f874fd0, type: 3}
+      propertyPath: 'defaultItemIds.Array.data[0]'
+      value: Item_Tool_Hoe_01
+      objectReference: {fileID: 0}
+    - target: {fileID: 6927069787567816573, guid: 60302e141324dcf43918fbf75f874fd0, type: 3}
+      propertyPath: 'defaultItemIds.Array.data[1]'
+      value: Item_Tool_Wateringcan_01
+      objectReference: {fileID: 0}
     - target: {fileID: 7103351938415883108, guid: 60302e141324dcf43918fbf75f874fd0, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0.06421
@@ -4523,10 +4527,30 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 7852822783206254448, guid: 60302e141324dcf43918fbf75f874fd0, type: 3}
+      propertyPath: CropLayer
+      value: 
+      objectReference: {fileID: 310903400}
+    - target: {fileID: 7852822783206254448, guid: 60302e141324dcf43918fbf75f874fd0, type: 3}
+      propertyPath: FarmLayer
+      value: 
+      objectReference: {fileID: 74518005}
+    - target: {fileID: 7852822783206254448, guid: 60302e141324dcf43918fbf75f874fd0, type: 3}
+      propertyPath: GroundLayer
+      value: 
+      objectReference: {fileID: 665875757}
+    - target: {fileID: 7852822783206254448, guid: 60302e141324dcf43918fbf75f874fd0, type: 3}
+      propertyPath: HighlightLayer
+      value: 
+      objectReference: {fileID: 667520473}
     - target: {fileID: 8028766588824731156, guid: 60302e141324dcf43918fbf75f874fd0, type: 3}
       propertyPath: m_Name
       value: ManagerContainer
       objectReference: {fileID: 0}
+    - target: {fileID: 8034985237703769819, guid: 60302e141324dcf43918fbf75f874fd0, type: 3}
+      propertyPath: InventoryPanel
+      value: 
+      objectReference: {fileID: 1277783893}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []

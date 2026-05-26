@@ -47,7 +47,9 @@ public class HotbarUI : MonoBehaviour
             {
                 _hotbarSlotList.Add(slotComponent);
 
-                int index = i; 
+                int index = i;
+                slotComponent.InitSlot(index);
+
                 slotComponent.BindSlotSelectEvent((id) => OnClick_HotbarSlot(index));
             }
         }
@@ -64,14 +66,7 @@ public class HotbarUI : MonoBehaviour
         {
             var data = hotbarDataArray[i];
 
-            if (data != null)
-            {
-                _hotbarSlotList[i].InitSlot(i, data.ItemDataId, data.ItemStackCount);
-            }
-            else 
-            {
-                _hotbarSlotList[i].InitSlot(i, "", 0);
-            }
+            _hotbarSlotList[i].UpdateSlot(data);
         }
     }
 

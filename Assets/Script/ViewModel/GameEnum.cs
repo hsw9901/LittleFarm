@@ -47,3 +47,8 @@ public enum ItemType
     Crop,
     Food
 }
+public enum FieldObjectType
+{
+    None = 0,
+    Crop
+}

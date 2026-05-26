@@ -1,12 +1,10 @@
 ﻿using UnityEngine;
-using UnityEngine.UI; // ✨ 기본 유니티 UI 컴포넌트를 사용하기 위해 추가
 using System.Collections.Generic;
 
 public class InventoryUI : UIBase
 {
     [SerializeField] private GameObject Prefab_Slot;
     [SerializeField] private Transform Transform_UISlotRoot;
-
     [SerializeField] private ButtonUI Button_CloseSelf;
 
     private int _generatedKey = 0;
@@ -46,9 +44,16 @@ public class InventoryUI : UIBase
         foreach (var slotkv in _itemSlotList)
         {
             var slotUI = slotkv.Value;
-            var data = itemList[index];
+            if (index < itemList.Count)
+            {
+                var data = itemList[index];
 
-            slotUI.InitSlot(slotkv.Key, data.ItemDataId, data.ItemStackCount);
+                slotUI.UpdateSlot(data);
+            }
+            else
+            {
+                slotUI.UpdateSlot(null);
+            }
             index++;
         }
     }
@@ -65,6 +70,7 @@ public class InventoryUI : UIBase
 
         _generatedKey++;
         gobj.name = $"ItemSlot: {_generatedKey}";
+        slotComponent.InitSlot(_generatedKey);
 
         _itemSlotList.Add(_generatedKey, slotComponent);
         slotComponent.BindSlotSelectEvent(OnChildSlotSelected);

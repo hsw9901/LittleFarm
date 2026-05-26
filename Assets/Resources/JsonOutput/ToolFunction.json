@@ -1,0 +1,20 @@
+[
+  {
+    "Id": "Item_Tool_Hoe_01",
+    "#Name": "낡은 괭이",
+    "ActionType": "Till",
+    "StaminaCost": 2
+  },
+  {
+    "Id": "Item_Tool_Watering_01",
+    "#Name": "낡은 물뿌리개",
+    "ActionType": "Watering",
+    "StaminaCost": 2
+  },
+  {
+    "Id": "Item_Tool_Axe_01",
+    "#Name": "낡은 도끼",
+    "ActionType": "Chop",
+    "StaminaCost": 4
+  }
+]

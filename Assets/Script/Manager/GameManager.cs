@@ -2,11 +2,13 @@
 using System;
 using System.Collections.Generic;
 using UnityEngine;
+using Cysharp.Threading.Tasks;
 
 public class GameManager : MonoBehaviour
 {
     public static GameManager Inst { get; private set; }
 
+    [SerializeField] private string[] defaultItemIds = { "Item_Tool_Hoe_01", "Item_Tool_Wateringcan_01"};
     private PlayerModel _playerModel;
     public PlayerModel PlayerData => _playerModel;
 
@@ -17,7 +19,27 @@ public class GameManager : MonoBehaviour
         DontDestroyOnLoad(gameObject);
         InitNewGame();
     }
+    
+    private async void Start()
+    {
+        if (GameDataManager.Inst != null)
+        {
+            await GameDataManager.Inst.InitAllDataAsync();
+        }
+        int timeoutCount = 0;
+        while (InventoryManager.Inst == null && timeoutCount < 100)
+        {
+            await UniTask.Yield();
+            timeoutCount++;
+        }
+        
+        bool isNewGame = CheckIsNewGame();
 
+        if (isNewGame)
+        {
+            GiveDefaultItems();
+        }
+    }
 
     public void InitNewGame()
     {
@@ -70,5 +92,22 @@ public class GameManager : MonoBehaviour
     public void RequestMainMenu()
     {
         GameStateManager.Inst.ChangeState(GameState.MainMenu);
+    }
+
+    private bool CheckIsNewGame()
+    {
+        return true;
+    }
+
+    private void GiveDefaultItems()
+    {
+        Debug.Log("[GameManager] 기본 아이템 지급");
+
+        if (InventoryManager.Inst == null) return;
+
+        foreach (string itemId in defaultItemIds)
+        {
+            InventoryManager.Inst.AddItem(itemId, 1);
+        }
     }
 }   
