@@ -12,29 +12,23 @@ public class HotbarUI : MonoBehaviour
     [SerializeField] private int HotbarSlotCount = 10;
 
     private List<InventorySlotUI> _hotbarSlotList = new List<InventorySlotUI>();
-    private int _currentSelectedIndex = 0; 
+    private int _currentSelectedIndex = 0;
 
-    private void Start()
+
+    private void Awake()
     {
         InitHotbarSlots();
-
-        SelectSlot(_currentSelectedIndex);
     }
 
-    private void OnEnable()
-    {
-        if (InventoryManager.Inst != null)
-        {
-            InventoryManager.Inst.OnInventoryChanged += RefreshHotbarSlots;
-        }
-        RefreshHotbarSlots();
-    }
-    private void OnDisable()
+    private void Start()
     {
         if (InventoryManager.Inst != null)
         {
             InventoryManager.Inst.OnInventoryChanged -= RefreshHotbarSlots;
+            InventoryManager.Inst.OnInventoryChanged += RefreshHotbarSlots;
+            RefreshHotbarSlots();
         }
+        SelectSlot(_currentSelectedIndex);
     }
 
     private void Update()

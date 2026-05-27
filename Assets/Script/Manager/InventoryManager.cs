@@ -10,7 +10,7 @@ public class InventoryManager : MonoBehaviour
 
     [Header("인벤토리 설정")]
     [SerializeField] private int mainInventorySize = 36;
-    [SerializeField] private int hotbarSize = 6;
+    [SerializeField] private int hotbarSize = 10;
 
     private List<ItemModel> _mainInventory = new List<ItemModel>();
     private ItemModel[] _hotbarInventory;
