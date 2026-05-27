@@ -12,8 +12,6 @@ public class HotbarUI : MonoBehaviour
     [SerializeField] private int HotbarSlotCount = 10;
 
     private List<InventorySlotUI> _hotbarSlotList = new List<InventorySlotUI>();
-    private int _currentSelectedIndex = 0;
-
 
     private void Awake()
     {
@@ -28,7 +26,8 @@ public class HotbarUI : MonoBehaviour
             InventoryManager.Inst.OnInventoryChanged += RefreshHotbarSlots;
             RefreshHotbarSlots();
         }
-        SelectSlot(_currentSelectedIndex);
+
+        SelectSlot(0);
     }
 
     private void Update()
@@ -68,11 +67,18 @@ public class HotbarUI : MonoBehaviour
         var hotbarDataArray = InventoryManager.Inst.GetHotbarInventory();
         if (hotbarDataArray == null) { return; }
 
+        int equippedIndex = InventoryManager.Inst.EquippedHotbarIndex;
+
         for (int i = 0; i < _hotbarSlotList.Count; i++)
         {
             var data = hotbarDataArray[i];
 
             _hotbarSlotList[i].UpdateSlot(data);
+
+            bool isEquipped = (i == equippedIndex);
+            bool isSwapSelected = (InventoryManager.Inst.SelectedSlotId == i && InventoryManager.Inst.SelectedSlotArea == InventoryManager.SlotArea.Hotbar);
+
+            _hotbarSlotList[i].ChangeSelectedState(isEquipped || isSwapSelected);
         }
     }
 
@@ -96,7 +102,8 @@ public class HotbarUI : MonoBehaviour
 
         if (scroll != 0f)
         {
-            int nextIndex = _currentSelectedIndex;
+            if (InventoryManager.Inst == null) {return;}
+            int nextIndex = InventoryManager.Inst.EquippedHotbarIndex;
 
             if (scroll > 0f)
             {
@@ -121,13 +128,10 @@ public class HotbarUI : MonoBehaviour
     {
         if (index < 0 || index >= _hotbarSlotList.Count) return;
 
-        _currentSelectedIndex = index;
 
-        for (int i = 0; i < _hotbarSlotList.Count; i++)
+        if (InventoryManager.Inst != null)
         {
-            _hotbarSlotList[i].ChangeSelectedState(i == _currentSelectedIndex);
+            InventoryManager.Inst.ChangeEquippedIndex(index);
         }
-
-        Debug.Log($"[Hotbar] 현재 {index + 1}번 툴바 슬롯 선택됨!");
     }
 }

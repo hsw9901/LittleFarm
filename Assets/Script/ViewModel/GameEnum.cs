@@ -52,3 +52,18 @@ public enum FieldObjectType
     None = 0,
     Crop
 }
+
+public enum ItemUseType
+{
+    None = 0,
+    Tool,
+    Consumeable
+}
+
+public enum ItemUseResult
+{
+    None = 0,
+    Consume,
+    Keep,
+    Fail
+}

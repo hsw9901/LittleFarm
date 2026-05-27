@@ -15,13 +15,19 @@ public class Player : MonoBehaviour
     private Vector2 _moveInput;
     private bool _isRunning;
     private bool _lookRight = true;
-    public ToolType CurrentTool = ToolType.Hoe;
 
     private void Awake()
     {
         _rigidBody = GetComponent<Rigidbody2D>();
         _rigidBody.gravityScale = 0f;
         _rigidBody.constraints = RigidbodyConstraints2D.FreezeRotation;
+    }
+    private void Start()
+    {
+        if (GameManager.Inst != null)
+        {
+            GameManager.Inst.RegisterPlayer(this);
+        }
     }
 
     private void Update()
@@ -35,12 +41,12 @@ public class Player : MonoBehaviour
         CheckFilp();
         UpdatePlayerState();
 
-        if (Input.GetKeyDown(KeyCode.Alpha1)) CurrentTool = ToolType.Hoe;
-        if (Input.GetKeyDown(KeyCode.Alpha2)) CurrentTool = ToolType.Wateringcan;
-
         if (Input.GetKeyDown(KeyCode.F))
         {
-            InteractWithTile();
+            if (InventoryManager.Inst != null)
+            {
+                InventoryManager.Inst.UseEquippedItem();
+            }
         }
     }
 
@@ -102,24 +108,13 @@ public class Player : MonoBehaviour
     }
 
    
-    private void InteractWithTile()
+    public Vector2Int GetTargetGridPosition()
     {
         Vector3 currentPos = transform.position;
         float interactDistance = 1.0f;
         Vector3 targetPos = currentPos;
         targetPos.x += _lookRight ? interactDistance : -interactDistance;
 
-        Vector2Int gridPos = FarmManager.Inst.GetGridPosition(targetPos);
-        
-        switch (CurrentTool)
-        {
-            case ToolType.Hoe:
-                FarmManager.Inst.RequestTillTile(gridPos);
-                break;
-            case ToolType.Wateringcan:
-                FarmManager.Inst.RequestWaterTile(gridPos);
-                break;
-
-        }
+        return FarmManager.Inst.GetGridPosition(targetPos);
     }
 }

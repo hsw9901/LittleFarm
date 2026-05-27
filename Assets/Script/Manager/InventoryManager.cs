@@ -21,6 +21,7 @@ public class InventoryManager : MonoBehaviour
 
     public SlotArea _selectedSlotArea = SlotArea.Main;
     public SlotArea SelectedSlotArea => _selectedSlotArea;
+    public int EquippedHotbarIndex { get; private set; } = 0;
 
     private void Awake()
     {
@@ -139,5 +140,64 @@ public class InventoryManager : MonoBehaviour
     public void ResetSelection()
     {
         _selectedSlotId = -1;
+    }
+
+    public ItemModel GetHotbarItem(int hotbarIndex)
+    {
+        if (hotbarIndex < 0 || hotbarIndex >= _hotbarInventory.Length)
+        {
+            return new ItemModel { ItemDataId = "", ItemStackCount = 0 };
+        }
+        return _hotbarInventory[hotbarIndex];
+    }
+
+    public void ChangeEquippedIndex(int index)
+    {
+        if (index <0 || index >= hotbarSize) { return; }
+        EquippedHotbarIndex = index;
+        OnInventoryChanged?.Invoke();
+    }
+
+    public void ConsumeHotbarItem(int hotbarIndex)
+    {
+        if (hotbarIndex < 0 || hotbarIndex >= _hotbarInventory.Length) { return; }
+        ItemModel item = _hotbarInventory[hotbarIndex];
+
+        if (string.IsNullOrEmpty(item.ItemDataId) || item.ItemStackCount <= 0) { return; }
+
+        item.ItemStackCount--;
+
+        if (item.ItemStackCount <= 0)
+        {
+            item.ItemDataId = "";
+            item.ItemStackCount = 0;
+        }
+
+        _hotbarInventory[hotbarIndex] = item;
+        OnInventoryChanged?.Invoke();
+    }
+
+
+    public void UseEquippedItem()
+    {
+        ItemModel currentItem = _hotbarInventory[EquippedHotbarIndex];
+
+        if (string.IsNullOrEmpty(currentItem.ItemDataId) || currentItem.ItemStackCount <= 0) { return; }
+
+        ItemUseResult result = ItemEffectManager.Inst.ApplyEffect(currentItem.ItemDataId);
+
+        if (result == ItemUseResult.Consume) 
+        {
+            ConsumeHotbarItem(EquippedHotbarIndex);
+        }
+        else if (result == ItemUseResult.Keep)
+        {
+            //
+        }
+        else if (result == ItemUseResult.Fail)
+        {
+            //
+        }
+        
     }
 }

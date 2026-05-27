@@ -11,7 +11,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] private string[] defaultItemIds = { "Item_Tool_Hoe_01", "Item_Tool_Wateringcan_01"};
     private PlayerModel _playerModel;
     public PlayerModel PlayerData => _playerModel;
-
+    public Player MainPlayer { get; private set; }
 
     private void Awake()
     {
@@ -107,7 +107,11 @@ public class GameManager : MonoBehaviour
 
         foreach (string itemId in defaultItemIds)
         {
-            InventoryManager.Inst.AddItem(itemId, 1);
+            InventoryManager.Inst.AddItem(itemId, 3);
         }
+    }
+    public void RegisterPlayer(Player player)
+    {
+        MainPlayer = player;
     }
 }   

@@ -11,10 +11,25 @@ public class GameDataBase
 public class ItemData : GameDataBase
 {
     public string Name;
-    public ItemType ItemType;
+    public string ItemType;
+    public string ItemUseType;
     public int MaxStack;
     public string IconKey;
     public string Description;
+    public ItemType GetItemType()
+    {
+        if (Enum.TryParse<ItemType>(this.ItemType, true, out ItemType result))
+            return result;
+
+        return default;
+    }
+    public ItemUseType GetItemUseType()
+    {
+        if (Enum.TryParse<ItemUseType>(this.ItemUseType, true, out ItemUseType result))
+            return result;
+
+        return default;
+    }
 }
 
 [Serializable]

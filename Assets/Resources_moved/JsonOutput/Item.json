@@ -3,6 +3,7 @@
     "Id": "Item_Tool_Hoe_01",
     "Name": "낡은 괭이",
     "ItemType": "Tool",
+    "ItemUseType": "Tool",
     "MaxStack": 1,
     "IconKey": "Sheet_Items[Icon_Tool_Hoe_01]",
     "Description": "낡고 오래된 기본 괭이"
@@ -11,6 +12,7 @@
     "Id": "Item_Tool_Wateringcan_01",
     "Name": "낡은 물뿌리개",
     "ItemType": "Tool",
+    "ItemUseType": "Tool",
     "MaxStack": 1,
     "IconKey": "Sheet_Items[Icon_Tool_Wateringcan_01]",
     "Description": "낡고 오래된 기본 물뿌리개"
@@ -19,6 +21,7 @@
     "Id": "Item_Tool_Axe_01",
     "Name": "낡은 도끼",
     "ItemType": "Tool",
+    "ItemUseType": "Tool",
     "MaxStack": 1,
     "IconKey": "Sheet_Items[Icon_Tool_Axe_01]",
     "Description": "낡고 오래된 기본 도끼"
@@ -27,6 +30,7 @@
     "Id": "Item_Crop_Tomato",
     "Name": "토마토",
     "ItemType": "Crop",
+    "ItemUseType": "Consumeable",
     "MaxStack": 99,
     "IconKey": "Icon_Crop_Tomato",
     "Description": "토마토"
@@ -35,6 +39,7 @@
     "Id": "Item_Seed_Tomato",
     "Name": "토마토 씨앗",
     "ItemType": "Seed",
+    "ItemUseType": "Consumeable",
     "MaxStack": 99,
     "IconKey": "Icon_Seed_Tomato",
     "Description": "토마토 씨앗"
@@ -43,6 +48,7 @@
     "Id": "Item_Crop_Potato",
     "Name": "감자",
     "ItemType": "Crop",
+    "ItemUseType": "Consumeable",
     "MaxStack": 99,
     "IconKey": "Icon_Crop_Potato",
     "Description": "감자"
@@ -51,6 +57,7 @@
     "Id": "Item_Seed_Potato",
     "Name": "감자 씨앗",
     "ItemType": "Seed",
+    "ItemUseType": "Consumeable",
     "MaxStack": 99,
     "IconKey": "Icon_Seed_Potato",
     "Description": "감자 씨앗"
@@ -59,6 +66,7 @@
     "Id": "Item_Food_GriiledTomato",
     "Name": "구운 토마토",
     "ItemType": "Food",
+    "ItemUseType": "Consumeable",
     "MaxStack": 50,
     "IconKey": "Icon_Food_GrilledTomato",
     "Description": "구운 토마토"
