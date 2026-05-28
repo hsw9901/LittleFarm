@@ -16,11 +16,12 @@ public class ItemEffectManager : MonoBehaviour
             return ItemUseResult.Fail;
         }
         Debug.Log($"🚨 디버그: [{itemDataId}]의 현재 UseType 값은 [{itemData.ItemUseType}] 입니다!");
+        Player currentPlayer = GameManager.Inst.MainPlayer;
+        Vector2Int targetPos = currentPlayer.GetTargetGridPosition();
 
         if (itemData.GetItemUseType() == ItemUseType.Tool)
         {
-            Player currentPlayer = GameManager.Inst.MainPlayer;
-            Vector2Int targetPos = currentPlayer.GetTargetGridPosition();
+            
 
             switch (itemDataId)
             {
@@ -47,8 +48,16 @@ public class ItemEffectManager : MonoBehaviour
                     Debug.Log("스테미나를 회복했습니다");
                     break;
                 case "Item_Seed_Tomato":
-                    Debug.Log("토마토씨앗심기");
-                    break;
+                    bool isPlanted = FarmManager.Inst.RequestPlantSeed(targetPos, "Item_Seed_Tomato", 3);
+                    if (isPlanted)
+                    {
+                        Debug.Log("토마토씨앗심기");
+                        return ItemUseResult.Consume;
+                    }
+                    else
+                    {
+                        return ItemUseResult.Fail;
+                    }
             }
             return ItemUseResult.Consume;
         }

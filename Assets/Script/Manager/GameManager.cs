@@ -39,6 +39,7 @@ public class GameManager : MonoBehaviour
         {
             GiveDefaultItems();
         }
+        RequestStartGame();
     }
 
     public void InitNewGame()

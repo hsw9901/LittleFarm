@@ -8,6 +8,15 @@ public class GameDataManager : MonoBehaviour
 {
     public static GameDataManager Inst { get; private set; }
 
+    [Header("작물 이미지 데이터")]
+    public List<CropSpriteData> CropSprites = new List<CropSpriteData>();
+
+    public Sprite[] GetCropSprites(string cropId)
+    {
+        var data = CropSprites.Find(x => x.CropId == cropId);
+        return data != null ? data.GrowthSprites : null;
+    }
+
     [Serializable]
     private class SerializationWrapper<T>
     {

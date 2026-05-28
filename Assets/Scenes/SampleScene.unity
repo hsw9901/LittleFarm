@@ -4480,12 +4480,24 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 667520473}
     - target: {fileID: 6927069787567816573, guid: 60302e141324dcf43918fbf75f874fd0, type: 3}
+      propertyPath: defaultItemIds.Array.size
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 6927069787567816573, guid: 60302e141324dcf43918fbf75f874fd0, type: 3}
       propertyPath: 'defaultItemIds.Array.data[0]'
       value: Item_Tool_Hoe_01
       objectReference: {fileID: 0}
     - target: {fileID: 6927069787567816573, guid: 60302e141324dcf43918fbf75f874fd0, type: 3}
       propertyPath: 'defaultItemIds.Array.data[1]'
       value: Item_Tool_Wateringcan_01
+      objectReference: {fileID: 0}
+    - target: {fileID: 6927069787567816573, guid: 60302e141324dcf43918fbf75f874fd0, type: 3}
+      propertyPath: 'defaultItemIds.Array.data[2]'
+      value: Item_Crop_Tomato
+      objectReference: {fileID: 0}
+    - target: {fileID: 6927069787567816573, guid: 60302e141324dcf43918fbf75f874fd0, type: 3}
+      propertyPath: 'defaultItemIds.Array.data[3]'
+      value: Item_Seed_Tomato
       objectReference: {fileID: 0}
     - target: {fileID: 7103351938415883108, guid: 60302e141324dcf43918fbf75f874fd0, type: 3}
       propertyPath: m_LocalPosition.x
@@ -4536,6 +4548,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 74518005}
     - target: {fileID: 7852822783206254448, guid: 60302e141324dcf43918fbf75f874fd0, type: 3}
+      propertyPath: CropPrefab
+      value: 
+      objectReference: {fileID: 5842707270317040106, guid: d2edc2b6c7faa1d4bbfa7ae0e7e8b41c, type: 3}
+    - target: {fileID: 7852822783206254448, guid: 60302e141324dcf43918fbf75f874fd0, type: 3}
       propertyPath: GroundLayer
       value: 
       objectReference: {fileID: 665875757}
@@ -4551,6 +4567,26 @@ PrefabInstance:
       propertyPath: InventoryPanel
       value: 
       objectReference: {fileID: 1277783893}
+    - target: {fileID: 8848727960180035840, guid: 60302e141324dcf43918fbf75f874fd0, type: 3}
+      propertyPath: CropSprites.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8848727960180035840, guid: 60302e141324dcf43918fbf75f874fd0, type: 3}
+      propertyPath: CropSprites.Array.data[0].CropId
+      value: Item_Seed_Tomato
+      objectReference: {fileID: 0}
+    - target: {fileID: 8848727960180035840, guid: 60302e141324dcf43918fbf75f874fd0, type: 3}
+      propertyPath: CropSprites.Array.data[0].GrowthSprites.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 8848727960180035840, guid: 60302e141324dcf43918fbf75f874fd0, type: 3}
+      propertyPath: 'CropSprites.Array.data[0].GrowthSprites.Array.data[0]'
+      value: 
+      objectReference: {fileID: -492208134, guid: 5137ae0254bbb734f9b7ac091de1a3c6, type: 3}
+    - target: {fileID: 8848727960180035840, guid: 60302e141324dcf43918fbf75f874fd0, type: 3}
+      propertyPath: 'CropSprites.Array.data[0].GrowthSprites.Array.data[1]'
+      value: 
+      objectReference: {fileID: -232229259, guid: c2d0325b2df062d4ea8a32f1aa5ece56, type: 3}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []

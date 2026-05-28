@@ -10,15 +10,17 @@ public class FarmManager : MonoBehaviour
     [SerializeField] private Tilemap GroundLayer;
     [SerializeField] private Tilemap FarmLayer;
     [SerializeField] private Tilemap HighlightLayer;
-    [SerializeField] private Tilemap CropLayer;
 
     [Header("타일 애셋")]
     [SerializeField] private TileBase TilledTile;
     [SerializeField] private TileBase WetTilledTile;
     [SerializeField] private TileBase HighlightTile;
 
+    [Header("작물 설정")]
+    [SerializeField] private GameObject CropPrefab;
 
     private Dictionary<Vector2Int, FarmTileData> _tiles = new();
+    private Dictionary<Vector2Int, Crop> _cropInstances = new();
     
     private void Awake()
     {
@@ -40,6 +42,9 @@ public class FarmManager : MonoBehaviour
         _tiles.Clear();
         FarmLayer.ClearAllTiles();
 
+        foreach (var crop in _cropInstances.Values) { Destroy(crop.gameObject); }
+        _cropInstances.Clear();
+
         foreach (var tileData in data.FarmTileList)
         {
             _tiles[tileData.GridPos] = tileData;
@@ -51,6 +56,11 @@ public class FarmManager : MonoBehaviour
             else if (tileData.state == TileState.Watered)
             {
                 FarmLayer.SetTile((Vector3Int)tileData.GridPos, WetTilledTile);
+            }
+
+            if (!string.IsNullOrEmpty(tileData.CropId))
+            {
+                SpawnCropObject(tileData.GridPos, tileData);
             }
         }
     }
@@ -87,7 +97,7 @@ public class FarmManager : MonoBehaviour
 
             tile.Moisture = 1;
 
-            if (tile.state == TileState.Tilled) 
+            if (tile.state == TileState.Tilled || tile.state == TileState.Growing) 
             {
                 tile.state = TileState.Watered;
             }
@@ -95,9 +105,46 @@ public class FarmManager : MonoBehaviour
             FarmLayer.SetTile((Vector3Int)pos, WetTilledTile);
 
             Debug.Log($"{pos}타일에 물을 주었습니다.");
+
+            if (_cropInstances.TryGetValue(pos, out var crop)) 
+            {
+                crop.WaterCrop();
+            }
         }
     }
 
+    public bool RequestPlantSeed(Vector2Int pos, string cropId, int maxGrowthDay = 3)
+    {
+        if (!_tiles.TryGetValue(pos, out FarmTileData tile)) { return false; }
+
+        if (tile.state != TileState.Tilled && tile.state != TileState.Watered) { return false; }
+
+        if (!string.IsNullOrEmpty(tile.CropId)) { return false; }
+
+        tile.CropId = cropId;
+        tile.DaysGrown = 0;
+        tile.state = (tile.state == TileState.Watered) ? TileState.Watered : TileState.Growing;
+
+        SpawnCropObject(pos, tile, maxGrowthDay);
+        return true;
+    }
+
+    public void SpawnCropObject(Vector2Int pos, FarmTileData tileData, int maxGrowthDay = 3)
+    {
+        Vector3 worldPos = GroundLayer.GetCellCenterWorld((Vector3Int)pos);
+
+        GameObject cropObj = Instantiate(CropPrefab, worldPos, Quaternion.identity);
+
+        if (cropObj.TryGetComponent(out Crop cropComponent))
+        {
+            cropComponent.InitCrop(tileData.CropId, maxGrowthDay);
+
+            cropComponent.CurrentGrowthDay = tileData.DaysGrown;
+            if (tileData.state == TileState.Watered) cropComponent.WaterCrop();
+
+            _cropInstances[pos] = cropComponent;
+        }
+    }
 
     public Vector2Int GetGridPosition(Vector3 worldPos)
     {
@@ -132,6 +179,13 @@ public class FarmManager : MonoBehaviour
                 {
                     tile.DaysGrown++;
                     tile.state = TileState.Growing;
+
+                    FarmLayer.SetTile((Vector3Int)tile.GridPos, TilledTile);
+
+                    if (_cropInstances.TryGetValue(tile.GridPos, out Crop crop))
+                    {
+                        crop.GrowNextDay();
+                    }
                 }
             }
             else if (tile.state == TileState.Tilled)

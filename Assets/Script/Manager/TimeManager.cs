@@ -24,6 +24,16 @@ public class TimeManager : MonoBehaviour
             return;
         }
 
+        //테스트용 치트
+        if (Input.GetKeyDown(KeyCode.Return))
+        {
+            Hour = 0;
+            Day++;
+            Debug.Log("강제로 다음 날로 넘어갑니다!");
+            OnDayChanged?.Invoke();
+            return;
+        }
+
         _timer += Time.deltaTime;
 
         if (_timer >= 1f)

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using UnityEngine;
 
 
 [Serializable]
@@ -39,4 +40,11 @@ public class FieldObjectData
     public FieldObjectType ObjectType;
     public string PrefabKey;
     public bool IsInteractable;
+}
+
+[Serializable]
+public class CropSpriteData
+{
+    public string CropId;
+    public Sprite[] GrowthSprites;
 }
