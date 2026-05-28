@@ -4,6 +4,7 @@ public class Crop : MonoBehaviour
 {
     [Header("작물 정보")]
     public string CropId;
+    public string HarvestItemId;
     public int CurrentGrowthDay;
     public int MaxGrowthDay;
 
@@ -27,7 +28,12 @@ public class Crop : MonoBehaviour
         IsWatered = false;
         IsReadyToHarvest = false;
 
-        _mySprites = GameDataManager.Inst.GetCropSprites(cropId);
+        var data = GameDataManager.Inst.GetCropData(cropId);
+        if (data != null)
+        {
+            _mySprites = data.GrowthSprites;
+            HarvestItemId = data.HarvestItemId;
+        }
 
         UpdateSprite();
     }

@@ -48,6 +48,12 @@ public class Player : MonoBehaviour
                 InventoryManager.Inst.UseEquippedItem();
             }
         }
+
+        if (Input.GetKeyDown(KeyCode.E))
+        {
+            Vector2Int targetPos = GetTargetGridPosition();
+            bool harvestSuccess = FarmManager.Inst.RequestHarvest(targetPos);
+        }
     }
 
     private void FixedUpdate()
@@ -106,7 +112,6 @@ public class Player : MonoBehaviour
     {
         AnimatorController_Player.SetState(newState);
     }
-
    
     public Vector2Int GetTargetGridPosition()
     {

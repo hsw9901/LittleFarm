@@ -71,5 +71,8 @@ public class GameDataManager : MonoBehaviour
 
         return new Dictionary<string, T>();
     }
-
+    public CropSpriteData GetCropData(string cropId)
+    {
+        return CropSprites.Find(x => x.CropId == cropId);
+    }
 }

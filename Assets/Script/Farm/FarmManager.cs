@@ -194,4 +194,32 @@ public class FarmManager : MonoBehaviour
             }
         }
     }
+
+    public bool RequestHarvest(Vector2Int pos)
+    {
+        if (!_tiles.TryGetValue(pos, out FarmTileData tile)) return false;
+        if (!_cropInstances.TryGetValue(pos, out Crop crop)) return false;
+
+        if (crop.IsReadyToHarvest)
+        {
+            string harvestItemId = crop.HarvestItemId;
+
+            if (!string.IsNullOrEmpty(harvestItemId))
+            {
+                InventoryManager.Inst.AddItem(harvestItemId, 1);
+                Debug.Log($"{pos}에서 {harvestItemId}를 수확했습니다!");
+            }
+
+            Destroy(crop.gameObject);
+            _cropInstances.Remove(pos);
+
+            tile.CropId = "";
+            tile.DaysGrown = 0;
+            tile.state = (tile.Moisture > 0) ? TileState.Watered : TileState.Tilled;
+
+            return true;
+        }
+        Debug.Log("아직 수확할 수 없습니다!");
+        return false;
+    }
 }

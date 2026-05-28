@@ -46,5 +46,6 @@ public class FieldObjectData
 public class CropSpriteData
 {
     public string CropId;
+    public string HarvestItemId;
     public Sprite[] GrowthSprites;
 }
