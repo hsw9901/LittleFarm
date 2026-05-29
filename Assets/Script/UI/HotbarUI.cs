@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class HotbarUI : MonoBehaviour
+public class HotbarUI : UIBase
 {
     [Header("프리팹 및 생성 영역")]
     [SerializeField] private GameObject Prefab_Slot; 
@@ -13,8 +13,9 @@ public class HotbarUI : MonoBehaviour
 
     private List<InventorySlotUI> _hotbarSlotList = new List<InventorySlotUI>();
 
-    private void Awake()
+    protected override void Awake()
     {
+        base.Awake();
         InitHotbarSlots();
     }
 
@@ -28,13 +29,6 @@ public class HotbarUI : MonoBehaviour
         }
 
         SelectSlot(0);
-    }
-
-    private void Update()
-    {
-        CheckAlphaNumericInput();
-        CheckMouseScrollInput();
-
     }
 
     private void InitHotbarSlots()
@@ -82,43 +76,7 @@ public class HotbarUI : MonoBehaviour
         }
     }
 
-    private void CheckAlphaNumericInput()
-    {
-        if (Input.GetKeyDown(KeyCode.Alpha1)) SelectSlot(0);
-        else if (Input.GetKeyDown(KeyCode.Alpha2)) SelectSlot(1);
-        else if (Input.GetKeyDown(KeyCode.Alpha3)) SelectSlot(2);
-        else if (Input.GetKeyDown(KeyCode.Alpha4)) SelectSlot(3);
-        else if (Input.GetKeyDown(KeyCode.Alpha5)) SelectSlot(4);
-        else if (Input.GetKeyDown(KeyCode.Alpha6)) SelectSlot(5);
-        else if (Input.GetKeyDown(KeyCode.Alpha7)) SelectSlot(6);
-        else if (Input.GetKeyDown(KeyCode.Alpha8)) SelectSlot(7);
-        else if (Input.GetKeyDown(KeyCode.Alpha9)) SelectSlot(8);
-        else if (Input.GetKeyDown(KeyCode.Alpha0)) SelectSlot(9);
-
-    }
-    private void CheckMouseScrollInput()
-    {
-        float scroll = Input.GetAxis("Mouse ScrollWheel");
-
-        if (scroll != 0f)
-        {
-            if (InventoryManager.Inst == null) {return;}
-            int nextIndex = InventoryManager.Inst.EquippedHotbarIndex;
-
-            if (scroll > 0f)
-            {
-                nextIndex--;
-                if (nextIndex < 0) nextIndex = _hotbarSlotList.Count - 1;
-            }
-            else if (scroll < 0f)
-            {
-                nextIndex++;
-                if (nextIndex >= _hotbarSlotList.Count) nextIndex = 0;
-            }
-
-            SelectSlot(nextIndex);
-        }
-    }
+   
     private void OnClick_HotbarSlot(int index)
     {
         SelectSlot(index);

@@ -56,32 +56,49 @@ public class InventoryManager : MonoBehaviour
 
     public void AddItem(string itemDataId, int amount)
     {
-        bool isItemFound = false;
-
-        foreach (var item in _mainInventory)
+        for (int i = 0; i < _hotbarInventory.Length; i++)
         {
-            if (item.ItemDataId == itemDataId)
+            if (_hotbarInventory[i].ItemDataId == itemDataId)
             {
-                item.ItemStackCount += amount;
-                isItemFound = true;
-                break;
+                _hotbarInventory[i].ItemStackCount += amount;
+                OnInventoryChanged?.Invoke();
+                return; 
             }
         }
 
-        if (!isItemFound)
+        for (int i = 0; i < _mainInventory.Count; i++)
         {
-            foreach (var item in _mainInventory)
+            if (_mainInventory[i].ItemDataId == itemDataId)
             {
-                if (string.IsNullOrEmpty(item.ItemDataId))
-                {
-                    item.ItemDataId = itemDataId;
-                    item.ItemStackCount = amount;
-                    break;
-                }
+                _mainInventory[i].ItemStackCount += amount;
+                OnInventoryChanged?.Invoke();
+                return;
             }
         }
 
-        OnInventoryChanged?.Invoke();
+        for (int i = 0; i < _hotbarInventory.Length; i++)
+        {
+            if (string.IsNullOrEmpty(_hotbarInventory[i].ItemDataId))
+            {
+                _hotbarInventory[i].ItemDataId = itemDataId;
+                _hotbarInventory[i].ItemStackCount = amount;
+                OnInventoryChanged?.Invoke();
+                return;
+            }
+        }
+
+        for (int i = 0; i < _mainInventory.Count; i++)
+        {
+            if (string.IsNullOrEmpty(_mainInventory[i].ItemDataId))
+            {
+                _mainInventory[i].ItemDataId = itemDataId;
+                _mainInventory[i].ItemStackCount = amount;
+                OnInventoryChanged?.Invoke();
+                return;
+            }
+        }
+
+        Debug.LogWarning("가방이 가득 찼습니다!");
     }
 
     public void ClickHandSlot(int clickedSlotId, SlotArea area)
@@ -96,7 +113,7 @@ public class InventoryManager : MonoBehaviour
         if (_selectedSlotId == -1)
         {
             _selectedSlotId = clickedSlotId;
-            _selectedSlotArea = area; 
+            _selectedSlotArea = area;
             OnInventoryChanged?.Invoke();
             return;
         }
@@ -113,26 +130,18 @@ public class InventoryManager : MonoBehaviour
         if (firstData.ItemDataId == clickedData.ItemDataId && !string.IsNullOrEmpty(firstData.ItemDataId))
         {
             clickedData.ItemStackCount += firstData.ItemStackCount;
+
             firstData.ItemDataId = "";
             firstData.ItemStackCount = 0;
         }
         else
         {
-            string tempId = clickedData.ItemDataId;
-            int tempCount = clickedData.ItemStackCount;
+            if (area == SlotArea.Main) _mainInventory[clickedSlotId] = firstData;
+            else _hotbarInventory[clickedSlotId] = firstData;
 
-            clickedData.ItemDataId = firstData.ItemDataId;
-            clickedData.ItemStackCount = firstData.ItemStackCount;
-
-            firstData.ItemDataId = tempId;
-            firstData.ItemStackCount = tempCount;
+            if (_selectedSlotArea == SlotArea.Main) _mainInventory[_selectedSlotId] = clickedData;
+            else _hotbarInventory[_selectedSlotId] = clickedData;
         }
-
-        if (area == SlotArea.Main) _mainInventory[clickedSlotId] = clickedData;
-        else _hotbarInventory[clickedSlotId] = clickedData;
-
-        if (_selectedSlotArea == SlotArea.Main) _mainInventory[_selectedSlotId] = firstData;
-        else _hotbarInventory[_selectedSlotId] = firstData;
 
         _selectedSlotId = -1;
         OnInventoryChanged?.Invoke();

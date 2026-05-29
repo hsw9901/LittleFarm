@@ -16,6 +16,8 @@ public class Player : MonoBehaviour
     private bool _isRunning;
     private bool _lookRight = true;
 
+    private Vector2 _lastLook = Vector2.right;
+
     private void Awake()
     {
         _rigidBody = GetComponent<Rigidbody2D>();
@@ -41,19 +43,8 @@ public class Player : MonoBehaviour
         CheckFilp();
         UpdatePlayerState();
 
-        if (Input.GetKeyDown(KeyCode.F))
-        {
-            if (InventoryManager.Inst != null)
-            {
-                InventoryManager.Inst.UseEquippedItem();
-            }
-        }
+        ActiveInteraction();
 
-        if (Input.GetKeyDown(KeyCode.E))
-        {
-            Vector2Int targetPos = GetTargetGridPosition();
-            bool harvestSuccess = FarmManager.Inst.RequestHarvest(targetPos);
-        }
     }
 
     private void FixedUpdate()
@@ -63,10 +54,23 @@ public class Player : MonoBehaviour
 
     private void GetInput()
     {
-        _moveInput.x = Input.GetAxisRaw("Horizontal");
-        _moveInput.y = Input.GetAxisRaw("Vertical");
-        _moveInput = _moveInput.normalized;
-        _isRunning = Input.GetKey(KeyCode.LeftShift);
+        if (GameInputManager.Inst != null)
+        {
+            _moveInput = GameInputManager.Inst.MoveInput;
+            _isRunning = GameInputManager.Inst.IsRunning;
+        }
+
+        if (_moveInput != Vector2.zero)
+        {
+            if (Mathf.Abs(_moveInput.x) > Mathf.Abs(_moveInput.y))
+            {
+                _lastLook = new Vector2(Mathf.Sign(_moveInput.x), 0); 
+            }
+            else
+            {
+                _lastLook = new Vector2(0, Mathf.Sign(_moveInput.y));
+            }
+        }
     }
 
     private void Move()
@@ -77,11 +81,11 @@ public class Player : MonoBehaviour
 
     private void CheckFilp()
     {
-        if (_moveInput.x > 0 && !_lookRight) 
+        if (_lastLook.x > 0 && !_lookRight) 
         {
             Flip(); 
         }
-        if (_moveInput.x < 0 && _lookRight)
+        if (_lastLook.x < 0 && _lookRight)
         {
             Flip();
         }
@@ -117,9 +121,37 @@ public class Player : MonoBehaviour
     {
         Vector3 currentPos = transform.position;
         float interactDistance = 1.0f;
-        Vector3 targetPos = currentPos;
-        targetPos.x += _lookRight ? interactDistance : -interactDistance;
+        Vector3 targetPos = currentPos + (Vector3)(_lastLook * interactDistance);
 
         return FarmManager.Inst.GetGridPosition(targetPos);
+    }
+
+    private void ActiveInteraction()
+    {
+        if (GameInputManager.Inst != null && GameInputManager.Inst.IsInteractDown)
+        {
+            Vector2 playerCenter = new Vector2(transform.position.x, transform.position.y + 0.5f);
+            Vector2 checkWorldPos = playerCenter + (_lastLook * 1.0f);
+            Collider2D hit = Physics2D.OverlapCircle(checkWorldPos, 0.5f, LayerMask.GetMask("Interactable"));
+            if (hit != null)
+            {
+                if (hit.TryGetComponent(out Chest chest))
+                {
+                    chest.OpenChest();
+                }
+                return;
+            }
+
+            if (InventoryManager.Inst != null)
+            {
+                InventoryManager.Inst.UseEquippedItem();
+            }
+        }
+
+        if (GameInputManager.Inst != null && GameInputManager.Inst.IsHarvestDown)
+        {
+            Vector2Int targetPos = GetTargetGridPosition();
+            bool harvestSuccess = FarmManager.Inst.RequestHarvest(targetPos);
+        }
     }
 }

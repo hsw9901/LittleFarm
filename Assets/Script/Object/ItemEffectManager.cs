@@ -15,7 +15,7 @@ public class ItemEffectManager : MonoBehaviour
         {
             return ItemUseResult.Fail;
         }
-        Debug.Log($"🚨 디버그: [{itemDataId}]의 현재 UseType 값은 [{itemData.ItemUseType}] 입니다!");
+        Debug.Log($"[{itemDataId}]의 현재 UseType 값은 [{itemData.ItemUseType}] 입니다!");
         Player currentPlayer = GameManager.Inst.MainPlayer;
         Vector2Int targetPos = currentPlayer.GetTargetGridPosition();
 
