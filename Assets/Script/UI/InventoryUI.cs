@@ -23,7 +23,6 @@ public class InventoryUI : UIBase
         if (InventoryManager.Inst != null)
         {
             InventoryManager.Inst.OnInventoryChanged += RefreshInventorySlots;
-            InventoryManager.Inst.ResetSelection(); 
         }
         RefreshInventorySlots();
     }
@@ -51,16 +50,12 @@ public class InventoryUI : UIBase
             }
         }
 
-        int currentSelectedId = InventoryManager.Inst.SelectedSlotId;
-        InventoryManager.SlotArea currentSelectedArea = InventoryManager.Inst.SelectedSlotArea;
-
         for (int i = 0; i < _itemSlotList.Count; i++)
         {
             var slotUI = _itemSlotList[i];
             slotUI.InitSlot(i, InventoryManager.SlotArea.Main);
 
-            bool amISelected = (i == currentSelectedId && currentSelectedArea == InventoryManager.SlotArea.Main);
-            slotUI.ChangeSelectedState(amISelected);
+            slotUI.ChangeSelectedState(false);
 
             if (i < itemList.Count)
             {
@@ -83,13 +78,28 @@ public class InventoryUI : UIBase
         var slotComponent = gobj.GetComponent<InventorySlotUI>();
         if (slotComponent == null) return;
 
-        gobj.name = $"ItemSlot: {_itemSlotList.Count}";
+        int slotIndex = _itemSlotList.Count;
+        gobj.name = $"ItemSlot: {slotIndex}";
+
+        slotComponent.OnClicked = (id) => OnSlotClicked(slotIndex);
 
         _itemSlotList.Add(slotComponent);
     }
 
+    private void OnSlotClicked(int slotIndex)
+    {
+        if (InventoryManager.Inst == null) return;
+
+        var itemList = InventoryManager.Inst.GetMainInventory();
+
+        InventoryManager.Inst.SwapItemWithMouse(itemList, slotIndex);
+    }
+
     public void OnClick_ClosePopup()
     {
-        gameObject.SetActive(false);
+        if (UIManager.Inst != null)
+        {
+            UIManager.Inst.CloseInventoryPopup();
+        }
     }
 }

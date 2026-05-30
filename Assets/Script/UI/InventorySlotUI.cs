@@ -73,10 +73,6 @@ public class InventorySlotUI : MonoBehaviour
 
     public void OnClick_SelectItem()
     {
-        if (InventoryManager.Inst != null)
-        {
-            InventoryManager.Inst.ClickHandSlot(SlotInstanceId, _currentArea);
-        }
         OnClicked?.Invoke(SlotInstanceId);
     }
 

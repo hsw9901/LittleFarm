@@ -7,9 +7,23 @@ public class ChestController : UIBase
     [SerializeField] private Transform Transform_SlotRoot;
 
     private Chest _currentChest;
-    private ItemModel _itemInMouse = null;
-
     private List<InventorySlotUI> _chestSlotList = new List<InventorySlotUI>();
+
+    private void OnEnable()
+    {
+        if (InventoryManager.Inst != null)
+        {
+            InventoryManager.Inst.OnInventoryChanged += RefreshAllSlot;
+        }
+    }
+
+    private void OnDisable()
+    {
+        if (InventoryManager.Inst != null)
+        {
+            InventoryManager.Inst.OnInventoryChanged -= RefreshAllSlot;
+        }
+    }
 
     public void OpenChestUI(Chest chestData)
     {
@@ -31,18 +45,15 @@ public class ChestController : UIBase
         {
             var gobj = Instantiate(Prefab_Slot, Transform_SlotRoot);
             gobj.transform.localScale = Vector3.one;
-            gobj.name = $"ChestSlot: {i}";
+
+            int slotIndex = i; 
+            gobj.name = $"ChestSlot: {slotIndex}";
 
             var slotUI = gobj.GetComponent<InventorySlotUI>();
             if (slotUI != null)
             {
-                int index = i;
-
-                // 임시로 Main으로 넘기되, 상호작용은 아래 OnClicked에서 덮어씌웁니다.
-                slotUI.InitSlot(index, InventoryManager.SlotArea.Main);
-
-                // 클릭했을 때 "상자 슬롯이야(true)!" 하고 번호를 넘겨줍니다.
-                slotUI.OnClicked = (id) => OnSlotClicked(true, index);
+                slotUI.InitSlot(slotIndex, InventoryManager.SlotArea.Main);
+                slotUI.OnClicked = (id) => OnSlotClicked(true, slotIndex);
 
                 _chestSlotList.Add(slotUI);
             }
@@ -65,23 +76,13 @@ public class ChestController : UIBase
 
     public void OnSlotClicked(bool isChestSlot, int slotIndex)
     {
-        if (_currentChest == null) return;
+        if (_currentChest == null || InventoryManager.Inst == null) return;
 
-        IList<ItemModel> targetArray = isChestSlot ? _currentChest.ChestInventory : InventoryManager.Inst.GetMainInventory();
-        ItemModel clickedItem = targetArray[slotIndex];
+        IList<ItemModel> targetArray = isChestSlot
+            ? (IList<ItemModel>)_currentChest.ChestInventory
+            : (IList<ItemModel>)InventoryManager.Inst.GetMainInventory();
 
-        if (_itemInMouse != null && clickedItem != null && _itemInMouse.ItemDataId == clickedItem.ItemDataId)
-        {
-            // (여기에 개수 더하는 로직 추가 가능)
-        }
-        else
-        {
-            // 마우스가 들고 있던 것과 칸에 있던 것을 맞바꿉니다.
-            targetArray[slotIndex] = _itemInMouse;
-            _itemInMouse = clickedItem;
-        }
-
-        RefreshAllSlot();
+        InventoryManager.Inst.SwapItemWithMouse(targetArray, slotIndex);
     }
 
     private void RefreshAllSlot()
@@ -92,6 +93,7 @@ public class ChestController : UIBase
         {
             var itemData = _currentChest.ChestInventory[i];
 
+            _chestSlotList[i].ChangeSelectedState(false);
             _chestSlotList[i].UpdateSlot(itemData);
         }
     }

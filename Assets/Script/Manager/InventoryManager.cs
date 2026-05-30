@@ -16,12 +16,8 @@ public class InventoryManager : MonoBehaviour
     private ItemModel[] _hotbarInventory;
 
     public event Action OnInventoryChanged;
-    public int _selectedSlotId = -1;
-    public int SelectedSlotId => _selectedSlotId;
-
-    public SlotArea _selectedSlotArea = SlotArea.Main;
-    public SlotArea SelectedSlotArea => _selectedSlotArea;
     public int EquippedHotbarIndex { get; private set; } = 0;
+    public ItemModel ItemInMouse { get; private set; } = null;
 
     private void Awake()
     {
@@ -101,54 +97,29 @@ public class InventoryManager : MonoBehaviour
         Debug.LogWarning("가방이 가득 찼습니다!");
     }
 
-    public void ClickHandSlot(int clickedSlotId, SlotArea area)
+    public void SwapItemWithMouse(IList<ItemModel> targetArray, int slotIndex)
     {
-        if (area == SlotArea.Main && (clickedSlotId < 0 || clickedSlotId >= _mainInventory.Count)) return;
-        if (area == SlotArea.Hotbar && (clickedSlotId < 0 || clickedSlotId >= _hotbarInventory.Length)) return;
+        ItemModel clickedItem = targetArray[slotIndex];
+        ItemModel currentMouseItem = ItemInMouse;
 
-        ItemModel clickedData = (area == SlotArea.Main) ? _mainInventory[clickedSlotId] : _hotbarInventory[clickedSlotId];
+        if (clickedItem == null) clickedItem = new ItemModel { ItemDataId = "", ItemStackCount = 0 };
+        if (currentMouseItem == null) currentMouseItem = new ItemModel { ItemDataId = "", ItemStackCount = 0 };
 
-        if (_selectedSlotId == -1 && string.IsNullOrEmpty(clickedData.ItemDataId)) return;
+        bool isMouseEmpty = string.IsNullOrEmpty(currentMouseItem.ItemDataId) || currentMouseItem.ItemStackCount <= 0;
+        bool isClickedEmpty = string.IsNullOrEmpty(clickedItem.ItemDataId) || clickedItem.ItemStackCount <= 0;
 
-        if (_selectedSlotId == -1)
+        if (!isMouseEmpty && !isClickedEmpty && currentMouseItem.ItemDataId == clickedItem.ItemDataId)
         {
-            _selectedSlotId = clickedSlotId;
-            _selectedSlotArea = area;
-            OnInventoryChanged?.Invoke();
-            return;
-        }
-
-        if (_selectedSlotId == clickedSlotId && _selectedSlotArea == area)
-        {
-            _selectedSlotId = -1;
-            OnInventoryChanged?.Invoke();
-            return;
-        }
-
-        ItemModel firstData = (_selectedSlotArea == SlotArea.Main) ? _mainInventory[_selectedSlotId] : _hotbarInventory[_selectedSlotId];
-
-        if (firstData.ItemDataId == clickedData.ItemDataId && !string.IsNullOrEmpty(firstData.ItemDataId))
-        {
-            clickedData.ItemStackCount += firstData.ItemStackCount;
-
-            firstData.ItemDataId = "";
-            firstData.ItemStackCount = 0;
+            clickedItem.ItemStackCount += currentMouseItem.ItemStackCount;
+            SetItemInMouse(null); 
         }
         else
         {
-            if (area == SlotArea.Main) _mainInventory[clickedSlotId] = firstData;
-            else _hotbarInventory[clickedSlotId] = firstData;
-
-            if (_selectedSlotArea == SlotArea.Main) _mainInventory[_selectedSlotId] = clickedData;
-            else _hotbarInventory[_selectedSlotId] = clickedData;
+            targetArray[slotIndex] = isMouseEmpty ? new ItemModel { ItemDataId = "", ItemStackCount = 0 } : currentMouseItem;
+            SetItemInMouse(isClickedEmpty ? null : clickedItem);
         }
 
-        _selectedSlotId = -1;
         OnInventoryChanged?.Invoke();
-    }
-    public void ResetSelection()
-    {
-        _selectedSlotId = -1;
     }
 
     public ItemModel GetHotbarItem(int hotbarIndex)
@@ -207,6 +178,13 @@ public class InventoryManager : MonoBehaviour
         {
             //
         }
-        
+    }
+    public void SetItemInMouse(ItemModel item)
+    {
+        ItemInMouse = item;
+        if (item != null && !string.IsNullOrEmpty(item.ItemDataId))
+            Debug.Log($"마우스가 집어듬: {item.ItemDataId} ({item.ItemStackCount}개)");
+        else
+            Debug.Log("마우스 비어있음");
     }
 }

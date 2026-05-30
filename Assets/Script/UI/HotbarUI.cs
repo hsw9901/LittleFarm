@@ -70,16 +70,30 @@ public class HotbarUI : UIBase
             _hotbarSlotList[i].UpdateSlot(data);
 
             bool isEquipped = (i == equippedIndex);
-            bool isSwapSelected = (InventoryManager.Inst.SelectedSlotId == i && InventoryManager.Inst.SelectedSlotArea == InventoryManager.SlotArea.Hotbar);
-
-            _hotbarSlotList[i].ChangeSelectedState(isEquipped || isSwapSelected);
+            _hotbarSlotList[i].ChangeSelectedState(isEquipped);
         }
     }
 
    
     private void OnClick_HotbarSlot(int index)
     {
-        SelectSlot(index);
+        if (InventoryManager.Inst == null) return;
+
+        bool isInventoryOpen = false;
+        if (UIManager.Inst != null)
+        {
+            isInventoryOpen = UIManager.Inst.IsOpened(UIType.Inventory);
+        }
+
+        if (isInventoryOpen)
+        {
+            IList<ItemModel> hotbarArray = (IList<ItemModel>)InventoryManager.Inst.GetHotbarInventory();
+            InventoryManager.Inst.SwapItemWithMouse(hotbarArray, index);
+        }
+        else
+        {
+            SelectSlot(index);
+        }
     }
 
     private void SelectSlot(int index)
