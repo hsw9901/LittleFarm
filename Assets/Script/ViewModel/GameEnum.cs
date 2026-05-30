@@ -45,7 +45,8 @@ public enum ItemType
     Tool,
     Seed,
     Crop,
-    Food
+    Food,
+    Furniture
 }
 public enum FieldObjectType
 {
@@ -57,7 +58,8 @@ public enum ItemUseType
 {
     None = 0,
     Tool,
-    Consumeable
+    Consumeable,
+    Interactable
 }
 
 public enum ItemUseResult

@@ -9,7 +9,10 @@ public class Chest : MonoBehaviour
 
     private void Awake()
     {
-        ChestInventory = new ItemModel[ChestSize];
+        if (ChestInventory == null || ChestInventory.Length != ChestSize)
+        {
+            InitNewChest(ChestSize);
+        }
     }
 
     public void OpenChest()
@@ -23,7 +26,7 @@ public class Chest : MonoBehaviour
 
     public bool TryPutItem(ItemModel item)
     {
-        for (int i = 0; i < ChestSize; i++) 
+        for (int i = 0; i < ChestSize; i++)
         {
             if (ChestInventory[i] == null || string.IsNullOrEmpty(ChestInventory[i].ItemDataId))
             {
@@ -34,4 +37,17 @@ public class Chest : MonoBehaviour
         return false;
     }
 
+    public void InitNewChest(int size)
+    {
+        ChestSize = size;
+
+        ChestInventory = new ItemModel[size];
+
+        for (int i = 0; i < size; i++)
+        {
+            ChestInventory[i] = new ItemModel { ItemDataId = "", ItemStackCount = 0 };
+        }
+
+        Debug.Log($"새 상자가 {size}칸으로 완벽하게 초기화되었습니다!");
+    }
 }

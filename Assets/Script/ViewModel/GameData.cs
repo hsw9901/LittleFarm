@@ -17,6 +17,7 @@ public class ItemData : GameDataBase
     public int MaxStack;
     public string IconKey;
     public string Description;
+    public string PrefabKey;
     public ItemType GetItemType()
     {
         if (Enum.TryParse<ItemType>(this.ItemType, true, out ItemType result))
