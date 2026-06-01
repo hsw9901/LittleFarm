@@ -14,6 +14,17 @@ public class Chest : MonoBehaviour
             InitNewChest(ChestSize);
         }
     }
+    private void Start()
+    {
+        if (GameObjectManager.Inst != null)
+            GameObjectManager.Inst.RegisterChest(this);
+    }
+
+    private void OnDestroy()
+    {
+        if (GameObjectManager.Inst != null)
+            GameObjectManager.Inst.UnregisterChest(this);
+    }
 
     public void OpenChest()
     {

@@ -24,6 +24,7 @@ public class GameDataManager : MonoBehaviour
     }
 
     public Dictionary<string, ItemData> ItemDataList { get; private set; } = new();
+    public Dictionary<string, ToolExpansion> ToolDataList { get; private set; } = new();
 
     private void Awake()
     {
@@ -35,7 +36,8 @@ public class GameDataManager : MonoBehaviour
         Debug.Log("[DataManager] 데이터 로드 시작");
 
         await UniTask.WhenAll(
-            LoadDataAsync<ItemData>("Data_Item").ContinueWith(d => ItemDataList = d)
+            LoadDataAsync<ItemData>("Data_Item").ContinueWith(d => ItemDataList = d),
+            LoadDataAsync<ToolExpansion>("Data_Tool").ContinueWith(d => ToolDataList = d)
         );
 
     }

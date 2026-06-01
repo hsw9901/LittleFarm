@@ -21,8 +21,11 @@ public class ItemEffectManager : MonoBehaviour
 
         if (itemData.GetItemUseType() == ItemUseType.Tool)
         {
-            
-
+            int currentToolPower = 1;
+            if (GameDataManager.Inst.ToolDataList.TryGetValue(itemDataId, out var toolData))
+            {
+                currentToolPower = toolData.ToolPower;
+            }
             switch (itemDataId)
             {
                 case "Item_Tool_Hoe_01": 
@@ -32,6 +35,20 @@ public class ItemEffectManager : MonoBehaviour
                 case "Item_Tool_Wateringcan_01":
                     FarmManager.Inst.RequestWaterTile(targetPos);
                     Debug.Log("물을 주었습니다!");
+                    break;
+                case "Item_Tool_Axe_01":
+                    if (GameManager.Inst != null && GameManager.Inst.MainPlayer != null)
+                    {
+                        GameManager.Inst.MainPlayer.HitFieldResource(ToolCategory.Axe, currentToolPower);
+                    }
+                    Debug.Log($"도끼를 사용했습니다! (적용된 파워: {currentToolPower})");
+                    break;
+                case "Item_Tool_Pickaxe_01":
+                    if (GameManager.Inst != null && GameManager.Inst.MainPlayer != null)
+                    {
+                        GameManager.Inst.MainPlayer.HitFieldResource(ToolCategory.Pickaxe, currentToolPower);
+                    }
+                    Debug.Log($"곡괭이를 사용했습니다! (적용된 파워: {currentToolPower})");
                     break;
                 default:
                     Debug.LogWarning($"정의되지 않은 도구입니다: {itemDataId}");

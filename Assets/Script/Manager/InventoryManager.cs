@@ -18,6 +18,8 @@ public class InventoryManager : MonoBehaviour
     public event Action OnInventoryChanged;
     public int EquippedHotbarIndex { get; private set; } = 0;
     public ItemModel ItemInMouse { get; private set; } = null;
+    public int CurrentGold { get; private set; } = 1000;
+
 
     private void Awake()
     {
@@ -186,5 +188,25 @@ public class InventoryManager : MonoBehaviour
             Debug.Log($"마우스가 집어듬: {item.ItemDataId} ({item.ItemStackCount}개)");
         else
             Debug.Log("마우스 비어있음");
+    }
+
+    public void AddGold(int amount)
+    {
+        CurrentGold += amount;
+        Debug.Log($"{amount} 골드 획득! (현재: {CurrentGold}G)");
+        // TODO: 골드 UI 업데이트 함수 호출
+    }
+
+    public bool TryUseGold(int amount)
+    {
+        if (CurrentGold >= amount)
+        {
+            CurrentGold -= amount;
+            Debug.Log($"{amount} 골드 지불 완료. (잔액: {CurrentGold}G)");
+            // TODO: 골드 UI 업데이트 함수 호출
+            return true;
+        }
+        Debug.LogWarning("골드가 부족합니다!");
+        return false;
     }
 }

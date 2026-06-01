@@ -138,20 +138,18 @@ public class Player : MonoBehaviour
             Vector2 playerCenter = new Vector2(transform.position.x, transform.position.y + 0.5f);
             Vector2 checkWorldPos = playerCenter + (_lastLook * InteractionDistance);
 
-            // ⭐️ 하드코딩 되어있던 레이어 대신, 인스펙터에서 설정한 InteractableLayer 변수를 사용합니다.
             Collider2D hit = Physics2D.OverlapCircle(checkWorldPos, InteractionRadius, InteractableLayer);
 
             if (hit != null)
             {
-                // 부딪힌 물체가 상자라면 열기!
                 if (hit.TryGetComponent(out Chest chest))
                 {
                     chest.OpenChest();
+                    return;
                 }
-                return; // 상자를 열었다면 도구 사용(UseEquippedItem)은 생략합니다.
+                
             }
 
-            // 상호작용할 물체가 없으면 손에 들고 있는 도구 사용!
             if (InventoryManager.Inst != null)
             {
                 InventoryManager.Inst.UseEquippedItem();
@@ -165,20 +163,34 @@ public class Player : MonoBehaviour
         }
     }
 
-    // 💡 추가됨: 씬 뷰(Scene View)에서 캐릭터가 상호작용하는 원의 범위가 보이게 해줍니다!
     private void OnDrawGizmosSelected()
     {
         Gizmos.color = Color.yellow;
 
-        // 캐릭터의 y위치를 조금 올려서(0.5f) 머리~가슴쯤에서 원이 나가도록 시각화
         Vector2 playerCenter = new Vector2(transform.position.x, transform.position.y + 0.5f);
 
-        // 마지막으로 바라본 방향이 (0,0)이라면 기본값으로 아래쪽이나 오른쪽을 그려줍니다.
         Vector2 lookDir = _lastLook == Vector2.zero ? Vector2.right : _lastLook;
 
         Vector2 checkWorldPos = playerCenter + (lookDir * InteractionDistance);
 
-        // 유니티 씬 화면에 노란색 테두리 원을 그려줍니다.
         Gizmos.DrawWireSphere(checkWorldPos, InteractionRadius);
+    }
+
+    public void HitFieldResource(ToolCategory tool, int power)
+    {
+        Vector2 playerCenter = new Vector2(transform.position.x, transform.position.y + 0.5f);
+        Vector2 checkWorldPos = playerCenter + (_lastLook * InteractionDistance);
+
+        Collider2D hit = Physics2D.OverlapCircle(checkWorldPos, InteractionRadius, InteractableLayer);
+
+        if (hit != null)
+        {
+            if (hit.TryGetComponent(out FieldResource resource))
+            {
+              
+                resource.TakeHit(tool, power);
+                return;
+            }
+        }
     }
 }

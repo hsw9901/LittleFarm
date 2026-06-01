@@ -1,10 +1,11 @@
-﻿[
+[
   {
     "Id": "Item_Tool_Hoe_01",
     "Name": "낡은 괭이",
     "ItemType": "Tool",
     "ItemUseType": "Tool",
     "MaxStack": 1,
+    "ToolCategory": "Hoe",
     "IconKey": "Sheet_Tool[Icon_Tool_Hoe_01]",
     "Description": "낡고 오래된 기본 괭이",
     "PrefabKey": null
@@ -15,6 +16,7 @@
     "ItemType": "Tool",
     "ItemUseType": "Tool",
     "MaxStack": 1,
+    "ToolCategory": "Wateringcan",
     "IconKey": "Sheet_Tool[Icon_Tool_Wateringcan_01]",
     "Description": "낡고 오래된 기본 물뿌리개",
     "PrefabKey": null
@@ -25,6 +27,7 @@
     "ItemType": "Tool",
     "ItemUseType": "Tool",
     "MaxStack": 1,
+    "ToolCategory": "Axe",
     "IconKey": "Sheet_Tool[Icon_Tool_Axe_01]",
     "Description": "낡고 오래된 기본 도끼",
     "PrefabKey": null
@@ -35,6 +38,7 @@
     "ItemType": "Tool",
     "ItemUseType": "Tool",
     "MaxStack": 1,
+    "ToolCategory": "Pickaxe",
     "IconKey": "Icon_Tool_Pickaxe_01",
     "Description": "낡고 오래된 기본 곡괭이",
     "PrefabKey": null
@@ -45,6 +49,7 @@
     "ItemType": "Crop",
     "ItemUseType": "Consumeable",
     "MaxStack": 99,
+    "ToolCategory": null,
     "IconKey": "Icon_Crop_Tomato",
     "Description": "토마토",
     "PrefabKey": null
@@ -55,6 +60,7 @@
     "ItemType": "Seed",
     "ItemUseType": "Consumeable",
     "MaxStack": 99,
+    "ToolCategory": null,
     "IconKey": "Icon_Seed_Tomato",
     "Description": "토마토 씨앗",
     "PrefabKey": null
@@ -65,6 +71,7 @@
     "ItemType": "Crop",
     "ItemUseType": "Consumeable",
     "MaxStack": 99,
+    "ToolCategory": null,
     "IconKey": "Icon_Crop_Potato",
     "Description": "감자",
     "PrefabKey": null
@@ -75,6 +82,7 @@
     "ItemType": "Seed",
     "ItemUseType": "Consumeable",
     "MaxStack": 99,
+    "ToolCategory": null,
     "IconKey": "Icon_Seed_Potato",
     "Description": "감자 씨앗",
     "PrefabKey": null
@@ -85,6 +93,7 @@
     "ItemType": "Food",
     "ItemUseType": "Consumeable",
     "MaxStack": 50,
+    "ToolCategory": null,
     "IconKey": "Icon_Food_GrilledTomato",
     "Description": "구운 토마토",
     "PrefabKey": null
@@ -95,6 +104,7 @@
     "ItemType": "Furniture",
     "ItemUseType": "Interactable",
     "MaxStack": 50,
+    "ToolCategory": null,
     "IconKey": "Sheet_Chest[Icon_Furniture_Chest]",
     "Description": "기본 나무 상자",
     "PrefabKey": "Chest"

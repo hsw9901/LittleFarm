@@ -15,7 +15,7 @@ MonoBehaviour:
   m_GroupName: Default Local Group
   m_GUID: 82e40f197182262498c6c31b3e99dcb4
   m_SerializeEntries:
-  - m_GUID: 1fcd1b2f24f6bfa47aab0dcb141465da
+  - m_GUID: 159f8c4f6787bc446b1a1259be3cadc8
     m_Address: Data_Item
     m_ReadOnly: 0
     m_SerializedLabels: []
@@ -25,8 +25,18 @@ MonoBehaviour:
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 5f9446ff26207734ab5a348dabd7441d
+    m_Address: Chest
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 75b03fb0c54630b4c9d0c511a0ea7d86
-    m_Address: Sheet_Items
+    m_Address: Sheet_Tool
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 868f116cee286c84e8ef61b844e9f35a
+    m_Address: Icon_Tool_Pickaxe_01
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0

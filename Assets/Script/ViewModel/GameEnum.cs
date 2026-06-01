@@ -69,3 +69,11 @@ public enum ItemUseResult
     Keep,
     Fail
 }
+
+public enum ToolCategory
+{
+    None = 0,
+    Axe,
+    Pickaxe,
+    Hoe
+}
