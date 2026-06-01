@@ -15,7 +15,7 @@ MonoBehaviour:
   m_GroupName: Default Local Group
   m_GUID: 82e40f197182262498c6c31b3e99dcb4
   m_SerializeEntries:
-  - m_GUID: 159f8c4f6787bc446b1a1259be3cadc8
+  - m_GUID: 2beb72824eee457408c0e6d2a7615384
     m_Address: Data_Item
     m_ReadOnly: 0
     m_SerializedLabels: []
@@ -27,6 +27,11 @@ MonoBehaviour:
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 5f9446ff26207734ab5a348dabd7441d
     m_Address: Chest
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 6376b7b24ae319d41b727800e1baac0b
+    m_Address: Data_Tool
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
