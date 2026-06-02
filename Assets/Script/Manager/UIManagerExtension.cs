@@ -15,7 +15,9 @@ public enum UIType
 {
     ProfilePopup,
     Inventory,
-    ChestUI
+    ChestUI,
+    HudUI,
+    TimeUI
 }
 
 public static class UIManagerExtension
@@ -83,6 +85,16 @@ public static class UIManagerExtension
         {
             uiManager.OpenContentUI(UIType.Inventory);
             uiManager.OpenContentUI(UIType.ProfilePopup);
+        }
+    }
+
+    public static void OpenTimeUI(this UIManager uiManager)
+    {
+        var uiBase = uiManager.OpenUI(UIRootType.MainUI, UIType.TimeUI);
+
+        if (uiBase == null)
+        {
+            Debug.LogWarning("UI가 생성되지 않았습니다");
         }
     }
 

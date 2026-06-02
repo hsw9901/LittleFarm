@@ -5,10 +5,12 @@ public class TimeManager : MonoBehaviour
 {
     public static TimeManager Inst {  get; private set; }
     public event Action OnDayChanged;
-    public int Hour { get; private set; }
-    public int Minute { get; private set; }
-    public int Day { get; private set; }
-    public int Season { get; private set; }
+    public event Action OnTimeChanged;
+    public int Hour { get; private set; } = 0;
+    public int Minute { get; private set; } = 0;
+    public int Day { get; private set; } = 1;
+    public int Season { get; private set; } = 0;
+    public int Year { get; private set; } = 1;
     private float _timer;
 
     private void Awake()
@@ -27,10 +29,8 @@ public class TimeManager : MonoBehaviour
         //테스트용 치트
         if (Input.GetKeyDown(KeyCode.Return))
         {
-            Hour = 0;
-            Day++;
             Debug.Log("강제로 다음 날로 넘어갑니다!");
-            OnDayChanged?.Invoke();
+            ChangeToNextDay();
             return;
         }
 
@@ -53,18 +53,34 @@ public class TimeManager : MonoBehaviour
 
             if(Hour >= 24)
             {
-                Hour = 0;
-                Day++;
-                OnDayChanged?.Invoke();
-
-                if(Day > 28)
-                {
-                    Day = 1;
-                    Season++;
-                }
+                ChangeToNextDay();
             }
         }
+        OnTimeChanged?.Invoke();
     }
+    public void ChangeToNextDay()
+    {
+        Hour = 0;
+        Minute = 0; // 밤을 샜거나 스킵했을 때 분도 초기화해주는 것이 안전합니다.
+        Day++;
+
+        if (Day > 28)
+        {
+            Day = 1;
+            Season++;
+
+            if (Season > 3)
+            {
+                Season = 0;
+                Year++;
+            }
+        }
+
+        // 날짜와 시간이 바뀌었으니 방송을 두 개 다 켜줍니다!
+        OnDayChanged?.Invoke();
+        OnTimeChanged?.Invoke();
+    }
+
     public TimeSaveData PackingState()
     {
         return new TimeSaveData { Season = this.Season, Day = this.Day, Hour = this.Hour, Minute = this.Minute };

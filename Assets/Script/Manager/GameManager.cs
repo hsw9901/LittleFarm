@@ -40,6 +40,10 @@ public class GameManager : MonoBehaviour
             GiveDefaultItems();
         }
         RequestStartGame();
+        if (UIManager.Inst != null)
+        {
+            UIManager.Inst.OpenTimeUI();
+        }
     }
 
     public void InitNewGame()
