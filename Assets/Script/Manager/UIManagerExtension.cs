@@ -17,7 +17,8 @@ public enum UIType
     Inventory,
     ChestUI,
     HudUI,
-    TimeUI
+    TimeUI,
+    ShopUI
 }
 
 public static class UIManagerExtension
@@ -95,6 +96,19 @@ public static class UIManagerExtension
         if (uiBase == null)
         {
             Debug.LogWarning("UI가 생성되지 않았습니다");
+        }
+    }
+    public static void OpenShopUI(this UIManager uiManager, System.Collections.Generic.List<string> itemsForSale)
+    {
+        var uiBase = uiManager.OpenContentUI(UIType.ShopUI);
+
+        if (uiBase == null)
+        {
+            Debug.LogWarning("UI가 생성되지 않았습니다");
+        }
+        if (uiBase is ShopUI shopUI)
+        {
+            shopUI.InitializeShop(itemsForSale);
         }
     }
 

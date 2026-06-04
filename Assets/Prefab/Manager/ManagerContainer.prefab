@@ -636,6 +636,50 @@ MonoBehaviour:
   WetTilledTile: {fileID: 11400000, guid: 0b2307ef0b3f84448865d6b3bd5736fe, type: 2}
   HighlightTile: {fileID: 11400000, guid: 6336b0b1bb1a74243ace585d43d92fad, type: 2}
   CropPrefab: {fileID: 5842707270317040106, guid: d2edc2b6c7faa1d4bbfa7ae0e7e8b41c, type: 3}
+--- !u!1 &5389058313071908849
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 5144013847014392447}
+  - component: {fileID: 8457340592506352451}
+  m_Layer: 0
+  m_Name: ShopManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &5144013847014392447
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5389058313071908849}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 7103351938415883108}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &8457340592506352451
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5389058313071908849}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9ba29f952e212664697c81569322704f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ShopManager
 --- !u!1 &5795344022641334764
 GameObject:
   m_ObjectHideFlags: 0
@@ -1019,6 +1063,7 @@ Transform:
   - {fileID: 4004247343634270705}
   - {fileID: 2309602640983238415}
   - {fileID: 6221773394119765758}
+  - {fileID: 5144013847014392447}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &8292448535085387444

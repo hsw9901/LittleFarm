@@ -294,9 +294,9 @@ GameObject:
   - component: {fileID: 4414127420575953947}
   - component: {fileID: 6036350583990305548}
   - component: {fileID: 7355704080303708246}
-  - component: {fileID: 8340664798608698793}
+  - component: {fileID: 15955343986057583}
   m_Layer: 5
-  m_Name: SlotUI
+  m_Name: ShopSlotUI
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -363,7 +363,7 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
---- !u!114 &8340664798608698793
+--- !u!114 &15955343986057583
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -372,13 +372,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 7257238194680475428}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 97ee6966c7bf2c84ab649ef76363316d, type: 3}
+  m_Script: {fileID: 11500000, guid: eb3bba106138bc243b29b2d63993f25c, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::InventorySlotUI
-  Text_StackCount: {fileID: 2492121029460257911}
-  Button_Slot: {fileID: 1341177738777335598}
-  Image_Icon: {fileID: 8287337065189628325}
-  Image_Selected: {fileID: 7119344067789000075}
+  m_EditorClassIdentifier: Assembly-CSharp::ShopSlotUI
+  ItemIcon: {fileID: 8287337065189628325}
+  NameText: {fileID: 0}
+  PriceText: {fileID: 2492121029460257911}
+  BuyButton: {fileID: 5811982090958162448}
 --- !u!1 &9177733761911417537
 GameObject:
   m_ObjectHideFlags: 0

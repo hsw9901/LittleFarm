@@ -12,7 +12,7 @@ public class ShopNPC : MonoBehaviour
 
         if (UIManager.Inst != null)
         {
-            // UIManager.Inst.OpenShopPopup(this); 
+            UIManager.Inst.OpenShopUI(ItemsForSale); 
         }
     }
 }

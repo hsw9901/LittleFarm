@@ -209,4 +209,31 @@ public class InventoryManager : MonoBehaviour
         Debug.LogWarning("골드가 부족합니다!");
         return false;
     }
+    public ItemModel GetInventoryItem(int index)
+    {
+        if (index < 0 || index >= _mainInventory.Count)
+        {
+            return new ItemModel { ItemDataId = "", ItemStackCount = 0 };
+        }
+        return _mainInventory[index];
+    }
+
+    public void ConsumeItem(int index, int amount)
+    {
+        if (index < 0 || index >= _mainInventory.Count) return;
+
+        ItemModel item = _mainInventory[index];
+
+        if (string.IsNullOrEmpty(item.ItemDataId) || item.ItemStackCount <= 0) return;
+
+        item.ItemStackCount -= amount;
+
+        if (item.ItemStackCount <= 0)
+        {
+            item.ItemDataId = "";
+            item.ItemStackCount = 0;
+        }
+
+        OnInventoryChanged?.Invoke();
+    }
 }

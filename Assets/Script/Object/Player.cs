@@ -147,7 +147,11 @@ public class Player : MonoBehaviour
                     chest.OpenChest();
                     return;
                 }
-                
+                if (hit.TryGetComponent(out ShopNPC shop))
+                {
+                    shop.OpenShop();
+                    return;
+                }
             }
 
             if (InventoryManager.Inst != null)
