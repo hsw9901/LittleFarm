@@ -23,7 +23,7 @@ public class UIManager : MonoBehaviour
 
     private void Start()
     {
-        
+        this.ShowStartupUIOnGameStart();
     }
     public bool IsOpened(UIType uiType)
     {
@@ -126,5 +126,14 @@ public class UIManager : MonoBehaviour
     public void ClosePopupUI(UIType uiType)
     {
         CloseUI(UIRootType.PopupUI, uiType);
+    }
+
+    public UIBase OpenMainUI(UIType uiType)
+    {
+        return OpenUI(UIRootType.MainUI, uiType);
+    }
+    public void CloseMainUI(UIType uiType)
+    {
+        CloseUI(UIRootType.MainUI, uiType);
     }
 }

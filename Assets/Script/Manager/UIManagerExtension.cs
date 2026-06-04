@@ -18,7 +18,10 @@ public enum UIType
     ChestUI,
     HudUI,
     TimeUI,
-    ShopUI
+    ShopUI,
+    RobbyUI,
+    SimplePopup,
+    GoldUI
 }
 
 public static class UIManagerExtension
@@ -30,6 +33,12 @@ public static class UIManagerExtension
         path = $"Prefab/UI/{uiRootType}/{uiType}";
         
         return path;
+    }
+
+    public static void ShowStartupUIOnGameStart(this UIManager uiManager)
+    {
+        uiManager.OpenContentUI(UIType.RobbyUI);
+        uiManager.OpenMainUI(UIType.HudUI);
     }
 
     public static void OpenInventoryPopup(this UIManager uiManager)
@@ -111,5 +120,20 @@ public static class UIManagerExtension
             shopUI.InitializeShop(itemsForSale);
         }
     }
+
+    public static void OpenSimplePopup(this UIManager uiManager, string msg)
+    {
+        var uiBase = uiManager.OpenPopupUI(UIType.SimplePopup);
+        if (uiBase == null)
+        {
+            Debug.LogWarning($"UI가 생성되지 않았습니다");
+            return;
+        }
+        if(uiBase is SimplePopup simplePopup)
+        {
+            simplePopup.SetUI(msg);
+        }
+    }
+
 
 }

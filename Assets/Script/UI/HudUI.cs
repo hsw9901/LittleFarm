@@ -16,6 +16,8 @@ public class HUDManager : UIBase
     public GameObject ArrowMorning;   
     public GameObject ArrowAfternoon; 
     public GameObject ArrowNight;
+    [Header("골드 UI 연결")]
+    [SerializeField] private TextMeshProUGUI Text_Gold;
 
     private void OnEnable()
     {
@@ -27,6 +29,12 @@ public class HUDManager : UIBase
             UpdateTimeUI();
             UpdateDateUI();
         }
+        if (InventoryManager.Inst != null)
+        {
+            UpdateGoldText(InventoryManager.Inst.CurrentGold);
+
+            InventoryManager.Inst.OnGoldChanged += UpdateGoldText;
+        }
     }
 
     private void OnDisable()
@@ -35,6 +43,10 @@ public class HUDManager : UIBase
         {
             TimeManager.Inst.OnTimeChanged -= UpdateTimeUI;
             TimeManager.Inst.OnDayChanged -= UpdateDateUI;
+        }
+        if (InventoryManager.Inst != null)
+        {
+            InventoryManager.Inst.OnGoldChanged -= UpdateGoldText;
         }
     }
 
@@ -88,5 +100,9 @@ public class HUDManager : UIBase
         }
 
         DateText.text = $"{seasonName} {TimeManager.Inst.Day}일";
+    }
+    private void UpdateGoldText(int currentGold)
+    {
+        Text_Gold.text = $"{currentGold:N0} G";
     }
 }

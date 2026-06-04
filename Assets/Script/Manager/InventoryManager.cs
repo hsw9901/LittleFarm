@@ -16,6 +16,7 @@ public class InventoryManager : MonoBehaviour
     private ItemModel[] _hotbarInventory;
 
     public event Action OnInventoryChanged;
+    public event Action<int> OnGoldChanged;
     public int EquippedHotbarIndex { get; private set; } = 0;
     public ItemModel ItemInMouse { get; private set; } = null;
     public int CurrentGold { get; private set; } = 1000;
@@ -185,7 +186,16 @@ public class InventoryManager : MonoBehaviour
     {
         ItemInMouse = item;
         if (item != null && !string.IsNullOrEmpty(item.ItemDataId))
+        {
+            string displayName = item.ItemDataId;
+
+            if (GameDataManager.Inst.ItemDataList.TryGetValue(item.ItemDataId, out ItemData data))
+            {
+                displayName = data.Name; 
+            }
             Debug.Log($"마우스가 집어듬: {item.ItemDataId} ({item.ItemStackCount}개)");
+            UIManager.Inst.OpenSimplePopup($"마우스 선택: {displayName} ({item.ItemStackCount}개)");
+        }
         else
             Debug.Log("마우스 비어있음");
     }
@@ -194,7 +204,8 @@ public class InventoryManager : MonoBehaviour
     {
         CurrentGold += amount;
         Debug.Log($"{amount} 골드 획득! (현재: {CurrentGold}G)");
-        // TODO: 골드 UI 업데이트 함수 호출
+        UIManager.Inst.OpenSimplePopup($"{amount} 골드 획득! (현재: {CurrentGold}G)");
+        OnGoldChanged?.Invoke(CurrentGold);
     }
 
     public bool TryUseGold(int amount)
@@ -203,10 +214,11 @@ public class InventoryManager : MonoBehaviour
         {
             CurrentGold -= amount;
             Debug.Log($"{amount} 골드 지불 완료. (잔액: {CurrentGold}G)");
-            // TODO: 골드 UI 업데이트 함수 호출
+            OnGoldChanged?.Invoke(CurrentGold);
             return true;
         }
         Debug.LogWarning("골드가 부족합니다!");
+        UIManager.Inst.OpenSimplePopup("골드가 부족합니다");
         return false;
     }
     public ItemModel GetInventoryItem(int index)

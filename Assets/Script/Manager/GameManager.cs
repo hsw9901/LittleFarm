@@ -40,10 +40,6 @@ public class GameManager : MonoBehaviour
             GiveDefaultItems();
         }
         RequestStartGame();
-        if (UIManager.Inst != null)
-        {
-            UIManager.Inst.OpenTimeUI();
-        }
     }
 
     public void InitNewGame()
@@ -52,9 +48,10 @@ public class GameManager : MonoBehaviour
         Debug.Log("[GameManager] 새로운 플레이어가 생성되었습니다.");
     }
 
-    public void SaveGame()
+    public void SaveAndEndGame()
     {
         SaveManager.Inst.SaveGameFlow();
+        Application.Quit();
     }
     public void LoadGame()
     {
