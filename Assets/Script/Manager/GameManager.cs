@@ -8,7 +8,16 @@ public class GameManager : MonoBehaviour
 {
     public static GameManager Inst { get; private set; }
 
-    [SerializeField] private string[] defaultItemIds = { "Item_Tool_Hoe_01", "Item_Tool_Wateringcan_01"};
+    [Serializable]
+    public struct StarterItem
+    {
+        public string ItemId; 
+        public int Amount; 
+    }
+    [Header("시작 아이템 설정")]
+    [SerializeField] 
+    private List<StarterItem> defaultItems = new List<StarterItem>();
+
     private PlayerModel _playerModel;
     public PlayerModel PlayerData => _playerModel;
     public Player MainPlayer { get; private set; }
@@ -107,9 +116,12 @@ public class GameManager : MonoBehaviour
 
         if (InventoryManager.Inst == null) return;
 
-        foreach (string itemId in defaultItemIds)
+        foreach (var item in defaultItems)
         {
-            InventoryManager.Inst.AddItem(itemId, 3);
+            if (!string.IsNullOrEmpty(item.ItemId) && item.Amount > 0)
+            {
+                InventoryManager.Inst.AddItem(item.ItemId, item.Amount);
+            }
         }
     }
     public void RegisterPlayer(Player player)
