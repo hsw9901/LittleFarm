@@ -1,0 +1,30 @@
+[
+  {
+    "Id": "Item_Tool_Hoe_01",
+    "#Name": "낡은 괭이",
+    "ToolCategory": "Hoe",
+    "StaminaCost": 2,
+    "ToolPower": 1
+  },
+  {
+    "Id": "Item_Tool_Watering_01",
+    "#Name": "낡은 물뿌리개",
+    "ToolCategory": "Wateringcan",
+    "StaminaCost": 2,
+    "ToolPower": null
+  },
+  {
+    "Id": "Item_Tool_Axe_01",
+    "#Name": "낡은 도끼",
+    "ToolCategory": "Axe",
+    "StaminaCost": 4,
+    "ToolPower": 2
+  },
+  {
+    "Id": "Item_Tool_Pickaxe_01",
+    "#Name": "낡은 곡괭이",
+    "ToolCategory": "Pickaxe",
+    "StaminaCost": 4,
+    "ToolPower": 2
+  }
+]

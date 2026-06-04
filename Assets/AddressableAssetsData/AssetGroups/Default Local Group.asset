@@ -40,8 +40,18 @@ MonoBehaviour:
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 784226ba8a52ec849b281b9c5710fc10
+    m_Address: Sheet_Tomato
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 868f116cee286c84e8ef61b844e9f35a
     m_Address: Icon_Tool_Pickaxe_01
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: a37fea48c73128842a4ae61ad5426df8
+    m_Address: Sheet_Strawberry
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
@@ -50,8 +60,18 @@ MonoBehaviour:
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: d39773c535946d041b4ce51264595d11
+    m_Address: Sheet_Potato
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: e7bd85e6942db464fbd64030430a5eba
     m_Address: Icon_Crop_Tomato
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: f089ec384a6b4f348bb3347b90831389
+    m_Address: Sheet_Carrot
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0

@@ -8,7 +8,9 @@
     "ToolCategory": "Hoe",
     "IconKey": "Sheet_Tool[Icon_Tool_Hoe_01]",
     "Description": "낡고 오래된 기본 괭이",
-    "PrefabKey": null
+    "PrefabKey": null,
+    "BuyPrice": null,
+    "SellPrice": null
   },
   {
     "Id": "Item_Tool_Wateringcan_01",
@@ -19,7 +21,9 @@
     "ToolCategory": "Wateringcan",
     "IconKey": "Sheet_Tool[Icon_Tool_Wateringcan_01]",
     "Description": "낡고 오래된 기본 물뿌리개",
-    "PrefabKey": null
+    "PrefabKey": null,
+    "BuyPrice": null,
+    "SellPrice": null
   },
   {
     "Id": "Item_Tool_Axe_01",
@@ -30,7 +34,9 @@
     "ToolCategory": "Axe",
     "IconKey": "Sheet_Tool[Icon_Tool_Axe_01]",
     "Description": "낡고 오래된 기본 도끼",
-    "PrefabKey": null
+    "PrefabKey": null,
+    "BuyPrice": null,
+    "SellPrice": null
   },
   {
     "Id": "Item_Tool_Pickaxe_01",
@@ -41,7 +47,9 @@
     "ToolCategory": "Pickaxe",
     "IconKey": "Icon_Tool_Pickaxe_01",
     "Description": "낡고 오래된 기본 곡괭이",
-    "PrefabKey": null
+    "PrefabKey": null,
+    "BuyPrice": null,
+    "SellPrice": null
   },
   {
     "Id": "Item_Crop_Tomato",
@@ -50,9 +58,11 @@
     "ItemUseType": "Consumeable",
     "MaxStack": 99,
     "ToolCategory": null,
-    "IconKey": "Icon_Crop_Tomato",
+    "IconKey": "Sheet_Tomato[Icon_Crop_Tomato]",
     "Description": "토마토",
-    "PrefabKey": null
+    "PrefabKey": null,
+    "BuyPrice": null,
+    "SellPrice": 20
   },
   {
     "Id": "Item_Seed_Tomato",
@@ -61,9 +71,11 @@
     "ItemUseType": "Consumeable",
     "MaxStack": 99,
     "ToolCategory": null,
-    "IconKey": "Icon_Seed_Tomato",
+    "IconKey": "Sheet_Tomato[Icon_Seed_Tomato]",
     "Description": "토마토 씨앗",
-    "PrefabKey": null
+    "PrefabKey": null,
+    "BuyPrice": 10,
+    "SellPrice": null
   },
   {
     "Id": "Item_Crop_Potato",
@@ -72,9 +84,11 @@
     "ItemUseType": "Consumeable",
     "MaxStack": 99,
     "ToolCategory": null,
-    "IconKey": "Icon_Crop_Potato",
+    "IconKey": "Sheet_Potato[Icon_Crop_Potato]",
     "Description": "감자",
-    "PrefabKey": null
+    "PrefabKey": null,
+    "BuyPrice": null,
+    "SellPrice": 20
   },
   {
     "Id": "Item_Seed_Potato",
@@ -83,9 +97,11 @@
     "ItemUseType": "Consumeable",
     "MaxStack": 99,
     "ToolCategory": null,
-    "IconKey": "Icon_Seed_Potato",
+    "IconKey": "Sheet_Potato[Icon_Seed_Potato]",
     "Description": "감자 씨앗",
-    "PrefabKey": null
+    "PrefabKey": null,
+    "BuyPrice": 10,
+    "SellPrice": null
   },
   {
     "Id": "Item_Food_GriiledTomato",
@@ -96,7 +112,61 @@
     "ToolCategory": null,
     "IconKey": "Icon_Food_GrilledTomato",
     "Description": "구운 토마토",
-    "PrefabKey": null
+    "PrefabKey": null,
+    "BuyPrice": null,
+    "SellPrice": 50
+  },
+  {
+    "Id": "Item_Crop_Carrot",
+    "Name": "당근",
+    "ItemType": "Crop",
+    "ItemUseType": "Consumeable",
+    "MaxStack": 99,
+    "ToolCategory": null,
+    "IconKey": "Sheet_Carrot[Icon_Crop_Carrot]",
+    "Description": "당근",
+    "PrefabKey": null,
+    "BuyPrice": null,
+    "SellPrice": 20
+  },
+  {
+    "Id": "Item_Seed_Carrot",
+    "Name": "당근 씨앗",
+    "ItemType": "Seed",
+    "ItemUseType": "Consumeable",
+    "MaxStack": 99,
+    "ToolCategory": null,
+    "IconKey": "Sheet_Carrot[Icon_Seed_Carrot]",
+    "Description": "당근 씨앗",
+    "PrefabKey": null,
+    "BuyPrice": 10,
+    "SellPrice": null
+  },
+  {
+    "Id": "Item_Crop_Strawberry",
+    "Name": "딸기",
+    "ItemType": "Crop",
+    "ItemUseType": "Consumeable",
+    "MaxStack": 99,
+    "ToolCategory": null,
+    "IconKey": "Sheet_Strawberry[Icon_Crop_Strawberry]",
+    "Description": "딸기",
+    "PrefabKey": null,
+    "BuyPrice": null,
+    "SellPrice": 15
+  },
+  {
+    "Id": "Item_Seed_Stawberry",
+    "Name": "딸기 씨앗",
+    "ItemType": "Seed",
+    "ItemUseType": "Consumeable",
+    "MaxStack": 99,
+    "ToolCategory": null,
+    "IconKey": "Sheet_Strawberry[Icon_Seed_Strawberry]",
+    "Description": "딸기 씨앗",
+    "PrefabKey": null,
+    "BuyPrice": 5,
+    "SellPrice": null
   },
   {
     "Id": "Item_Furniture_Chest",
@@ -107,6 +177,34 @@
     "ToolCategory": null,
     "IconKey": "Sheet_Chest[Icon_Furniture_Chest]",
     "Description": "기본 나무 상자",
-    "PrefabKey": "Chest"
+    "PrefabKey": "Chest",
+    "BuyPrice": null,
+    "SellPrice": null
+  },
+  {
+    "Id": "Item_Drop_Log",
+    "Name": "통나무",
+    "ItemType": "Drop",
+    "ItemUseType": "material",
+    "MaxStack": 99,
+    "ToolCategory": null,
+    "IconKey": "Icon_Drop_Log",
+    "Description": "통나무",
+    "PrefabKey": null,
+    "BuyPrice": null,
+    "SellPrice": 10
+  },
+  {
+    "Id": "Item_Drop_Cobble",
+    "Name": "조약돌",
+    "ItemType": "Drop",
+    "ItemUseType": "material",
+    "MaxStack": 99,
+    "ToolCategory": null,
+    "IconKey": "Icon_Drop_Cobble",
+    "Description": "조약돌",
+    "PrefabKey": null,
+    "BuyPrice": null,
+    "SellPrice": 10
   }
 ]
