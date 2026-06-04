@@ -38,7 +38,7 @@ public class GameInputManager : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.Escape))
         {
-            UIManager.Inst.CloseInventoryPopup();
+            UIManager.Inst.CloseAllOpenedPopup();
         }
 
         CheckHotbarNumberInput();

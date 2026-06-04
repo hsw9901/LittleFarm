@@ -221,20 +221,37 @@ public class InventoryManager : MonoBehaviour
         UIManager.Inst.OpenSimplePopup("골드가 부족합니다");
         return false;
     }
-    public ItemModel GetInventoryItem(int index)
+
+    public ItemModel GetItemByArea(SlotArea area, int index)
     {
-        if (index < 0 || index >= _mainInventory.Count)
+        if (area == SlotArea.Main)
         {
-            return new ItemModel { ItemDataId = "", ItemStackCount = 0 };
+            if (index < 0 || index >= _mainInventory.Count)
+                { return new ItemModel { ItemDataId = "", ItemStackCount = 0 }; }
+            return _mainInventory[index];
         }
-        return _mainInventory[index];
+        else
+        {
+            if (index < 0 || index >= _hotbarInventory.Length)
+                { return new ItemModel { ItemDataId = "", ItemStackCount = 0 }; }
+            return _hotbarInventory[index];
+        }
     }
 
-    public void ConsumeItem(int index, int amount)
+    public void ConsumeItemByArea(SlotArea area, int index, int amount)
     {
-        if (index < 0 || index >= _mainInventory.Count) return;
+        ItemModel item;
 
-        ItemModel item = _mainInventory[index];
+        if (area == SlotArea.Main)
+        {
+            if (index < 0 || index >= _mainInventory.Count) return;
+            item = _mainInventory[index];
+        }
+        else
+        {
+            if (index < 0 || index >= _hotbarInventory.Length) return;
+            item = _hotbarInventory[index];
+        }
 
         if (string.IsNullOrEmpty(item.ItemDataId) || item.ItemStackCount <= 0) return;
 
@@ -244,6 +261,15 @@ public class InventoryManager : MonoBehaviour
         {
             item.ItemDataId = "";
             item.ItemStackCount = 0;
+        }
+
+        if (area == SlotArea.Main)
+        {
+            _mainInventory[index] = item;
+        }
+        else
+        {
+            _hotbarInventory[index] = item;
         }
 
         OnInventoryChanged?.Invoke();

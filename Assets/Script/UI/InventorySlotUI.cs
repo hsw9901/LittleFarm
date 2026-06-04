@@ -73,7 +73,16 @@ public class InventorySlotUI : MonoBehaviour
 
     public void OnClick_SelectItem()
     {
-        OnClicked?.Invoke(SlotInstanceId);
+        if (UIManager.Inst.IsOpened(UIType.ShopUI))
+        {
+            int sellCount = 1; 
+
+            ShopManager.Inst.SellItem(_currentArea, SlotInstanceId, sellCount);
+        }
+        else
+        {
+            OnClicked?.Invoke(SlotInstanceId);
+        }
     }
 
     public void ChangeSelectedState(bool isSelected)

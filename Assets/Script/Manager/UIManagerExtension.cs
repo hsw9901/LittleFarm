@@ -85,6 +85,10 @@ public static class UIManagerExtension
 
     public static void ToggleInventoryPopup(this UIManager uiManager)
     {
+        if (uiManager.IsOpened(UIType.ShopUI) || uiManager.IsOpened(UIType.ChestUI))
+        {
+            return;
+        }
         if (uiManager.IsOpened(UIType.Inventory) || uiManager.IsOpened(UIType.ChestUI))
         {
             uiManager.CloseContentUI(UIType.Inventory);
@@ -97,18 +101,14 @@ public static class UIManagerExtension
             uiManager.OpenContentUI(UIType.ProfilePopup);
         }
     }
-
-    public static void OpenTimeUI(this UIManager uiManager)
-    {
-        var uiBase = uiManager.OpenUI(UIRootType.MainUI, UIType.TimeUI);
-
-        if (uiBase == null)
-        {
-            Debug.LogWarning("UI가 생성되지 않았습니다");
-        }
-    }
+    
     public static void OpenShopUI(this UIManager uiManager, System.Collections.Generic.List<string> itemsForSale)
     {
+        if (!uiManager.IsOpened(UIType.Inventory))
+        {
+            uiManager.OpenContentUI(UIType.Inventory);
+        }
+
         var uiBase = uiManager.OpenContentUI(UIType.ShopUI);
 
         if (uiBase == null)
@@ -134,6 +134,11 @@ public static class UIManagerExtension
             simplePopup.SetUI(msg);
         }
     }
-
-
+    public static void CloseAllOpenedPopup(this UIManager uiManager)
+    {
+        uiManager.CloseContentUI(UIType.ShopUI);
+        uiManager.CloseContentUI(UIType.ChestUI);
+        uiManager.CloseContentUI(UIType.Inventory);
+        uiManager.CloseContentUI(UIType.ProfilePopup);
+    }
 }

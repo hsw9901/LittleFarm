@@ -18,30 +18,36 @@ public class ShopManager : MonoBehaviour
             if (InventoryManager.Inst.TryUseGold(totalPrice))
             {
                 InventoryManager.Inst.AddItem(itemDataId, count);
-                Debug.Log($"{data.Name} {count}개 구매 완료!");
+                UIManager.Inst.OpenSimplePopup($"<color=green>{data.Name}</color> {count}개 구매 완료");
             }
             else
             {
-                Debug.Log("구매 실패: 돈이 부족합니다.");
+                UIManager.Inst.OpenSimplePopup("구매 실패: 돈이 부족합니다");
             }
         }
     }
-
     
-    public void SellItem(int inventoryIndex, int count)
+    public void SellItem(InventoryManager.SlotArea area, int slotIndex, int count)
     {
-        ItemModel myItem = InventoryManager.Inst.GetInventoryItem(inventoryIndex);
+        ItemModel myItem = InventoryManager.Inst.GetItemByArea(area, slotIndex);
 
         if (myItem != null && !string.IsNullOrEmpty(myItem.ItemDataId))
         {
+            if (myItem.ItemStackCount < count)
+            {
+                UIManager.Inst.OpenSimplePopup("아이템 개수가 부족합니다");
+                return;
+            }
+
             if (GameDataManager.Inst.ItemDataList.TryGetValue(myItem.ItemDataId, out ItemData data))
             {
                 int totalEarn = data.SellPrice * count;
 
-                InventoryManager.Inst.ConsumeItem(inventoryIndex, count);
+                InventoryManager.Inst.ConsumeItemByArea(area, slotIndex, count);
 
                 InventoryManager.Inst.AddGold(totalEarn);
-                Debug.Log($"{data.Name} {count}개 판매 완료! (+{totalEarn}G)");
+
+                UIManager.Inst.OpenSimplePopup($"<color=green>{data.Name}</color> 판매 완료! <color=yellow>+{totalEarn}G</color>");
             }
         }
     }
