@@ -61,7 +61,7 @@ public class TimeManager : MonoBehaviour
     public void ChangeToNextDay()
     {
         Hour = 0;
-        Minute = 0; // 밤을 샜거나 스킵했을 때 분도 초기화해주는 것이 안전합니다.
+        Minute = 0; 
         Day++;
 
         if (Day > 28)
@@ -76,7 +76,6 @@ public class TimeManager : MonoBehaviour
             }
         }
 
-        // 날짜와 시간이 바뀌었으니 방송을 두 개 다 켜줍니다!
         OnDayChanged?.Invoke();
         OnTimeChanged?.Invoke();
     }

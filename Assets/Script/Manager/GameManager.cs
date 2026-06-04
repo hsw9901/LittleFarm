@@ -41,13 +41,19 @@ public class GameManager : MonoBehaviour
             await UniTask.Yield();
             timeoutCount++;
         }
-        
-        bool isNewGame = CheckIsNewGame();
+        RequestMainMenu();
 
-        if (isNewGame)
+        UIManager.Inst.ShowStartupUIOnGameStart();
+    }
+    public void StartNewGame()
+    {
+        if (CheckIsNewGame())
         {
             GiveDefaultItems();
         }
+
+        UIManager.Inst.CloseContentUI(UIType.RobbyUI);
+
         RequestStartGame();
     }
 

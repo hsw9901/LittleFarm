@@ -39,10 +39,10 @@ public class Player : MonoBehaviour
 
     private void Update()
     {
-        //if (!GameStateManager.Inst.IsPlaying)
-        //{
-        //    return;
-        //}
+        if (!GameStateManager.Inst.IsPlaying)
+        {
+            return;
+        }
 
         GetInput();
         CheckFilp();

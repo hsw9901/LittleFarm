@@ -81,6 +81,7 @@ public static class UIManagerExtension
         {
             chestUI.OpenChestUI(chestData);
         }
+        uiManager.SyncGameState();
     }
 
     public static void ToggleInventoryPopup(this UIManager uiManager)
@@ -100,6 +101,7 @@ public static class UIManagerExtension
             uiManager.OpenContentUI(UIType.Inventory);
             uiManager.OpenContentUI(UIType.ProfilePopup);
         }
+        uiManager.SyncGameState();
     }
     
     public static void OpenShopUI(this UIManager uiManager, System.Collections.Generic.List<string> itemsForSale)
@@ -119,6 +121,7 @@ public static class UIManagerExtension
         {
             shopUI.InitializeShop(itemsForSale);
         }
+        uiManager.SyncGameState();
     }
 
     public static void OpenSimplePopup(this UIManager uiManager, string msg)
@@ -140,5 +143,27 @@ public static class UIManagerExtension
         uiManager.CloseContentUI(UIType.ChestUI);
         uiManager.CloseContentUI(UIType.Inventory);
         uiManager.CloseContentUI(UIType.ProfilePopup);
+
+        uiManager.SyncGameState();
+    }
+    public static void SyncGameState(this UIManager uiManager)
+    {
+        if (uiManager.IsOpened(UIType.Inventory) ||
+            uiManager.IsOpened(UIType.ShopUI) ||
+            uiManager.IsOpened(UIType.ChestUI) ||
+            uiManager.IsOpened(UIType.ProfilePopup))
+        {
+            if (GameStateManager.Inst.CurrentState == GameState.Playing)
+            {
+                GameStateManager.Inst.ChangeState(GameState.PopupUI);
+            }
+        }
+        else
+        {
+            if (GameStateManager.Inst.CurrentState == GameState.PopupUI)
+            {
+                GameStateManager.Inst.ChangeState(GameState.Playing);
+            }
+        }
     }
 }

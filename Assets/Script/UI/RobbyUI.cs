@@ -16,7 +16,9 @@ public class RobbyUI : UIBase
 
     public void OnClick_GameStart()
     {
-        UIManager.Inst.CloseContentUI(UIType.RobbyUI);
+        //UIManager.Inst.CloseContentUI(UIType.RobbyUI);
+        //GameManager.Inst.RequestStartGame();
+        GameManager.Inst.StartNewGame();
     }
     public void OnClick_GameLoad()
     {

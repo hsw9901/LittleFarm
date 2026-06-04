@@ -11,6 +11,7 @@ public class GameStateManager : MonoBehaviour
 
     public bool IsPlaying => CurrentState == GameState.Playing;
     public bool IsPaused => CurrentState == GameState.Paused;
+    public bool IsPopup => CurrentState == GameState.PopupUI;
 
     private void Awake()
     {
@@ -46,6 +47,9 @@ public class GameStateManager : MonoBehaviour
                 break;
             case GameState.Paused:
                 Time.timeScale = 0f;
+                break;
+            case GameState.PopupUI:
+                Time.timeScale = 1f;
                 break;
         }
     }

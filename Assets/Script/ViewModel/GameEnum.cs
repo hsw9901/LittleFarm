@@ -21,7 +21,8 @@ public enum GameState
     MainMenu,
     Loading,
     Playing,
-    Paused
+    Paused,
+    PopupUI
 }
 
 public enum Season

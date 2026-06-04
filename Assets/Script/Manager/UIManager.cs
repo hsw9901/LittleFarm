@@ -21,10 +21,6 @@ public class UIManager : MonoBehaviour
         Inst = this;
     }
 
-    private void Start()
-    {
-        this.ShowStartupUIOnGameStart();
-    }
     public bool IsOpened(UIType uiType)
     {
         return _openedUIDic.Contains(uiType);
