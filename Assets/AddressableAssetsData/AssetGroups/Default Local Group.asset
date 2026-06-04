@@ -15,13 +15,13 @@ MonoBehaviour:
   m_GroupName: Default Local Group
   m_GUID: 82e40f197182262498c6c31b3e99dcb4
   m_SerializeEntries:
-  - m_GUID: 2beb72824eee457408c0e6d2a7615384
-    m_Address: Data_Item
+  - m_GUID: 0ae971bfd37627d4695b00e9a71050cd
+    m_Address: Icon_Drop_Log
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: 5137ae0254bbb734f9b7ac091de1a3c6
-    m_Address: Icon_Seed_Tomato
+  - m_GUID: 5c0e16d73f5fb1a4b8236c508c91a236
+    m_Address: Icon_Drop_Cobble
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
@@ -32,6 +32,11 @@ MonoBehaviour:
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 6376b7b24ae319d41b727800e1baac0b
     m_Address: Data_Tool
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 7373539b31fae80469d57d899def8cf1
+    m_Address: Data_Item
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
@@ -62,11 +67,6 @@ MonoBehaviour:
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: d39773c535946d041b4ce51264595d11
     m_Address: Sheet_Potato
-    m_ReadOnly: 0
-    m_SerializedLabels: []
-    FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: e7bd85e6942db464fbd64030430a5eba
-    m_Address: Icon_Crop_Tomato
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0

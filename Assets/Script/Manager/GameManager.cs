@@ -45,8 +45,11 @@ public class GameManager : MonoBehaviour
 
         UIManager.Inst.ShowStartupUIOnGameStart();
     }
-    public void StartNewGame()
+    public void StartNewGame(string playerName, string worldName)
     {
+        _playerModel.PlayerName = playerName;
+        _playerModel.WorldName = worldName;
+
         if (CheckIsNewGame())
         {
             GiveDefaultItems();
@@ -86,7 +89,7 @@ public class GameManager : MonoBehaviour
     {
         _playerModel = data;
 
-        InventoryManager.Inst.ApplySaveData(_playerModel.Inventory, new ItemModel[6]);
+        InventoryManager.Inst.ApplySaveData(_playerModel.Inventory, new ItemModel[10], _playerModel.Gold);
     }
 
     public void RequestStartGame()

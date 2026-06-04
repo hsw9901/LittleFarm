@@ -19,7 +19,7 @@ public class InventoryManager : MonoBehaviour
     public event Action<int> OnGoldChanged;
     public int EquippedHotbarIndex { get; private set; } = 0;
     public ItemModel ItemInMouse { get; private set; } = null;
-    public int CurrentGold { get; private set; } = 1000;
+    public int CurrentGold { get; private set; } = 500;
 
 
     private void Awake()
@@ -45,12 +45,14 @@ public class InventoryManager : MonoBehaviour
     public List<ItemModel> GetMainInventory() => _mainInventory;
     public ItemModel[] GetHotbarInventory() => _hotbarInventory;
 
-    public void ApplySaveData(List<ItemModel> main, ItemModel[] hotbar)
+    public void ApplySaveData(List<ItemModel> main, ItemModel[] hotbar, int gold)
     {
         if (main != null) { _mainInventory = main; }
-        if (hotbar != null) { _hotbarInventory = hotbar; }  
+        if (hotbar != null) { _hotbarInventory = hotbar; }
 
+        CurrentGold = gold;
         OnInventoryChanged?.Invoke();
+        OnGoldChanged?.Invoke(CurrentGold);
     }
 
     public void AddItem(string itemDataId, int amount)

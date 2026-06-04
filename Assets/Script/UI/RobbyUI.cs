@@ -8,17 +8,15 @@ public class RobbyUI : UIBase
 
     private void OnEnable()
     {
-        Button_GameStart.BindOnClickButtonEvent(OnClick_GameStart);
+        Button_GameStart.BindOnClickButtonEvent(OnClick_NewGameStart);
         Button_GameLoad.BindOnClickButtonEvent(OnClick_GameLoad);
         Button_GameQuit.BindOnClickButtonEvent(OnClick_GameQuit);
 
     }
 
-    public void OnClick_GameStart()
+    public void OnClick_NewGameStart()
     {
-        //UIManager.Inst.CloseContentUI(UIType.RobbyUI);
-        //GameManager.Inst.RequestStartGame();
-        GameManager.Inst.StartNewGame();
+        UIManager.Inst.OpenContentUI(UIType.NewGamePopup);
     }
     public void OnClick_GameLoad()
     {

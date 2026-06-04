@@ -6,6 +6,7 @@ using UnityEngine;
 public class PlayerModel
 {
     public string PlayerName = "새농부";
+    public string WorldName = "";
     public int Gold = 500;
     public int CurrentStamina = 100;
     public int MaxStamina = 100;

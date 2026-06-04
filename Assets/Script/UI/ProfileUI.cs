@@ -4,7 +4,8 @@ using UnityEngine;
 public class ProfileUI : UIBase
 {
     [Header("프로필 정보 연결")]
-    [SerializeField] private TextMeshProUGUI Text_PlayerName; 
+    [SerializeField] private TextMeshProUGUI Text_PlayerName;
+    [SerializeField] private TextMeshProUGUI Text_WorldName;
     [SerializeField] private TextMeshProUGUI Text_Gold;       
     [SerializeField] private TextMeshProUGUI Text_Date;
 
@@ -28,7 +29,14 @@ public class ProfileUI : UIBase
 
     private void InitProfileData()
     {
-        if (Text_PlayerName != null) Text_PlayerName.text = "개발자";
+        if (GameManager.Inst != null && GameManager.Inst.PlayerData != null)
+        {
+            if (Text_PlayerName != null)
+                Text_PlayerName.text = GameManager.Inst.PlayerData.PlayerName;
+
+            if (Text_WorldName != null)
+                Text_WorldName.text = GameManager.Inst.PlayerData.WorldName;
+        }
 
         if (InventoryManager.Inst != null)
         {
