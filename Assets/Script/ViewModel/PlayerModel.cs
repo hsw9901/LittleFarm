@@ -10,7 +10,9 @@ public class PlayerModel
     public int Gold = 500;
     public int CurrentStamina = 100;
     public int MaxStamina = 100;
-    public Vector3 LastPosition = Vector3.zero;
+    public float PosX;
+    public float PosY;
+    public float PosZ;
 
     public List<ItemModel> Inventory = new List<ItemModel>();
     

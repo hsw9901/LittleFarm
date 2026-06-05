@@ -47,7 +47,13 @@ public class GameManager : MonoBehaviour
     }
     public void StartNewGame(string playerName, string worldName)
     {
-        SaveManager.Inst.FindEmptySlotForNewGame();
+        bool canStart = SaveManager.Inst.FindEmptySlotForNewGame();
+
+        if (!canStart)
+        {
+            UIManager.Inst.OpenSimplePopup("슬롯이 꽉 찼습니다! 이전 데이터를 삭제해주세요.");
+            return; 
+        }
 
         _playerModel.PlayerName = playerName;
         _playerModel.WorldName = worldName;
@@ -89,6 +95,13 @@ public class GameManager : MonoBehaviour
     }
     public PlayerModel PackingState()
     {
+        if (MainPlayer != null)
+        {
+            _playerModel.PosX = MainPlayer.transform.position.x;
+            _playerModel.PosY = MainPlayer.transform.position.y;
+            _playerModel.PosZ = MainPlayer.transform.position.z;
+        }
+
         if (InventoryManager.Inst != null)
         {
             _playerModel.Inventory = InventoryManager.Inst.GetMainInventory();
@@ -100,6 +113,15 @@ public class GameManager : MonoBehaviour
     public void ReloadState(PlayerModel data)
     {
         _playerModel = data;
+        MovePlayerToSavedPosition();
+        if (InventoryManager.Inst != null)
+        {
+            InventorySaveData invData = new InventorySaveData();
+            invData.MainInventoryItems = _playerModel.Inventory;
+            invData.CurrentGold = _playerModel.Gold;
+
+            InventoryManager.Inst.ReloadState(invData);
+        }
     }
 
     public void RequestStartGame()
@@ -146,5 +168,12 @@ public class GameManager : MonoBehaviour
     public void RegisterPlayer(Player player)
     {
         MainPlayer = player;
+    }
+    public void MovePlayerToSavedPosition()
+    {
+        if (MainPlayer != null && _playerModel != null)
+        {
+            MainPlayer.transform.position = new Vector3(_playerModel.PosX, _playerModel.PosY, _playerModel.PosZ);
+        }
     }
 }   

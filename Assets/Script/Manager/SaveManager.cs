@@ -97,19 +97,19 @@ public class SaveManager : MonoBehaviour
         }
         return null;
     }
-    public void FindEmptySlotForNewGame()
+
+    public bool FindEmptySlotForNewGame() 
     {
-        for (int i = 1; i <= 5; i++) 
+        for (int i = 1; i <= 5; i++)
         {
-            if (!HasSaveData(i)) 
+            if (!HasSaveData(i))
             {
-                CurrentSlotIndex = i; 
-                Debug.Log($"[SaveManager] 새 게임이 {i}번 슬롯에 할당되었습니다!");
-                return;
+                CurrentSlotIndex = i;
+                return true;
             }
         }
-
-        CurrentSlotIndex = 1;
-        Debug.LogWarning("[SaveManager] 슬롯이 꽉 차서 1번에 덮어씌웁니다.");
+        
+        Debug.LogWarning("[SaveManager] 모든 슬롯이 꽉 찼습니다!");
+        return false; 
     }
 }

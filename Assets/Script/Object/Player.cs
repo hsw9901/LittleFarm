@@ -34,7 +34,9 @@ public class Player : MonoBehaviour
         if (GameManager.Inst != null)
         {
             GameManager.Inst.RegisterPlayer(this);
+            GameManager.Inst.MovePlayerToSavedPosition();
         }
+        
     }
 
     private void Update()
