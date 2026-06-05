@@ -20,7 +20,7 @@ public class RobbyUI : UIBase
     }
     public void OnClick_GameLoad()
     {
-        GameManager.Inst.LoadGame();
+        UIManager.Inst.OpenContentUI(UIType.LoadGamePopup);
     }
 
     public void OnClick_GameQuit()

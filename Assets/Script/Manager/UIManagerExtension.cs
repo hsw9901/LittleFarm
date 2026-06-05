@@ -22,7 +22,8 @@ public enum UIType
     RobbyUI,
     SimplePopup,
     GoldUI,
-    NewGamePopup
+    NewGamePopup,
+    LoadGamePopup
 }
 
 public static class UIManagerExtension

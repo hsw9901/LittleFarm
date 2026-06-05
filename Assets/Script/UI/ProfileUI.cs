@@ -9,6 +9,17 @@ public class ProfileUI : UIBase
     [SerializeField] private TextMeshProUGUI Text_Gold;       
     [SerializeField] private TextMeshProUGUI Text_Date;
 
+    [Header("버튼 연결")]
+    [SerializeField] private ButtonUI Btn_SaveAndQuit;
+
+    private void Start()
+    {
+        if (Btn_SaveAndQuit != null)
+        {
+            Btn_SaveAndQuit.BindOnClickButtonEvent(OnClick_SaveAndQuit);
+        }
+    }
+
     private void OnEnable()
     {
         InitProfileData();
@@ -36,6 +47,11 @@ public class ProfileUI : UIBase
 
             if (Text_WorldName != null)
                 Text_WorldName.text = GameManager.Inst.PlayerData.WorldName;
+            if (InventoryManager.Inst != null)
+            {
+                UpdateGoldText(InventoryManager.Inst.CurrentGold);
+            }
+            UpdateDateText();
         }
 
         if (InventoryManager.Inst != null)
@@ -63,6 +79,16 @@ public class ProfileUI : UIBase
             string currentSeasonName = seasonNames[TimeManager.Inst.Season];
 
             Text_Date.text = $"{TimeManager.Inst.Year}년차 {currentSeasonName} {TimeManager.Inst.Day}일";
+        }
+    }
+
+    private void OnClick_SaveAndQuit()
+    {
+        Debug.Log("[ProfileUI] 현재 슬롯에 게임을 저장하고 종료합니다!");
+
+        if (GameManager.Inst != null)
+        {
+            GameManager.Inst.SaveAndEndGame();
         }
     }
 }

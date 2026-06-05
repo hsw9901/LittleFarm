@@ -59,6 +59,17 @@ public class GameManager : MonoBehaviour
 
         RequestStartGame();
     }
+    public void StartLoadedGame(int slotIndex)
+    {
+        Debug.Log($"[GameManager] {slotIndex}번 세이브 슬롯 로드 시작!");
+        
+        LoadGame(slotIndex); 
+
+        UIManager.Inst.CloseContentUI(UIType.RobbyUI);
+        UIManager.Inst.OpenContentUI(UIType.HudUI);
+
+        RequestStartGame();
+    }
 
     public void InitNewGame()
     {
@@ -71,9 +82,9 @@ public class GameManager : MonoBehaviour
         SaveManager.Inst.SaveGameFlow();
         Application.Quit();
     }
-    public void LoadGame()
+    public void LoadGame(int slotIndex)
     {
-        SaveManager.Inst.LoadGameFlow();
+        SaveManager.Inst.LoadGameFlow(slotIndex);
     }
     public PlayerModel PackingState()
     {
