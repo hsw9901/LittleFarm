@@ -1,6 +1,7 @@
-﻿using UnityEngine;
-using System;
+﻿using System;
 using System.Collections.Generic;
+using Unity.VisualScripting;
+using UnityEngine;
 
 public class InventoryManager : MonoBehaviour
 {
@@ -17,6 +18,7 @@ public class InventoryManager : MonoBehaviour
 
     public event Action OnInventoryChanged;
     public event Action<int> OnGoldChanged;
+    public event Action<ItemModel> OnEquippedItemChanged;
     public int EquippedHotbarIndex { get; private set; } = 0;
     public ItemModel ItemInMouse { get; private set; } = null;
     public int CurrentGold { get; private set; } = 500;
@@ -45,14 +47,27 @@ public class InventoryManager : MonoBehaviour
     public List<ItemModel> GetMainInventory() => _mainInventory;
     public ItemModel[] GetHotbarInventory() => _hotbarInventory;
 
-    public void ApplySaveData(List<ItemModel> main, ItemModel[] hotbar, int gold)
+    public InventorySaveData PackingState()
     {
-        if (main != null) { _mainInventory = main; }
-        if (hotbar != null) { _hotbarInventory = hotbar; }
+        InventorySaveData data = new InventorySaveData();
+        data.MainInventoryItems = new List<ItemModel>(_mainInventory);
 
-        CurrentGold = gold;
+        data.HotbarItems = (ItemModel[])_hotbarInventory.Clone();
+        data.CurrentGold = this.CurrentGold;
+
+        return data;
+    }
+
+    public void ReloadState(InventorySaveData data)
+    {
+        if (data == null) return;
+
+        if (data.MainInventoryItems != null) _mainInventory = new List<ItemModel>(data.MainInventoryItems);
+        if (data.HotbarItems != null) _hotbarInventory = (ItemModel[])data.HotbarItems.Clone();
+        this.CurrentGold = data.CurrentGold;
+
         OnInventoryChanged?.Invoke();
-        OnGoldChanged?.Invoke(CurrentGold);
+        OnGoldChanged?.Invoke(this.CurrentGold);
     }
 
     public void AddItem(string itemDataId, int amount)
@@ -141,6 +156,9 @@ public class InventoryManager : MonoBehaviour
         if (index <0 || index >= hotbarSize) { return; }
         EquippedHotbarIndex = index;
         OnInventoryChanged?.Invoke();
+
+        ItemModel equippedItem = _hotbarInventory[index];
+        OnEquippedItemChanged?.Invoke(equippedItem);
     }
 
     public void ConsumeHotbarItem(int hotbarIndex)

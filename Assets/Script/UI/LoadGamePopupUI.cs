@@ -49,11 +49,6 @@ public class LoadGamePopupUI : UIBase
 
                 _spawnedSlots.Add(btnUI);
             }
-            else
-            {
-                // 만약 프리팹에 ButtonUI가 안 붙어있다면 여기서 빨간색 경고를 띄웁니다!!!
-                Debug.LogError($"[경고] {i}번째 슬롯을 만들었지만 프리팹에 'ButtonUI' 스크립트가 없습니다!");
-            }
         }
     }
 
@@ -72,11 +67,8 @@ public class LoadGamePopupUI : UIBase
         if (btn == null) return;
 
         TextMeshProUGUI textUI = btn.GetComponentInChildren<TextMeshProUGUI>();
-        if (textUI == null) 
-        {
-            Debug.LogError($"[슬롯 {slotIndex}] 앗! 텍스트 컴포넌트를 찾지 못했습니다. 프리팹을 확인해주세요.");
-            return;
-        }
+        if (textUI == null) { return; }
+        
 
         if (SaveManager.Inst.HasSaveData(slotIndex))
         {

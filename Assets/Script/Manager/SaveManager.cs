@@ -13,7 +13,7 @@ public class SaveManager : MonoBehaviour
 
     private string GetPath(int slotIndex)
     {
-        return Path.Combine(Application.persistentDataPath, "SaveData_{slotIndex}.json");
+        return Path.Combine(Application.persistentDataPath, $"SaveData_{slotIndex}.json");
     }
 
     public bool HasSaveData(int slotIndex)
@@ -46,18 +46,46 @@ public class SaveManager : MonoBehaviour
     public void SaveGameFlow()
     {
         SaveModel currentSave = new SaveModel();
-        currentSave.TimeData = TimeManager.Inst.PackingState();
-        currentSave.FarmData = FarmManager.Inst.PackingState();
-        currentSave.PlayerData = GameManager.Inst.PackingState();
+        if (TimeManager.Inst != null)
+        {
+            currentSave.TimeData = TimeManager.Inst.PackingState();
+        }
+        if (FarmManager.Inst != null)
+        {
+            currentSave.FarmData = FarmManager.Inst.PackingState();
+        }
+        if (GameManager.Inst != null) 
+        {
+            currentSave.PlayerData = GameManager.Inst.PackingState(); 
+        }
+        if (InventoryManager.Inst != null) 
+        {
+            currentSave.InventoryData = InventoryManager.Inst.PackingState(); 
+        }
         RequestSaveData(currentSave, CurrentSlotIndex);
     }
     public void LoadGameFlow(int slotIndex)
     {
         SaveModel loadedData = RequestLoadSaveData(slotIndex);
-        if (loadedData == null) return;
-        TimeManager.Inst.ReloadState(loadedData.TimeData);
-        FarmManager.Inst.ReloadState(loadedData.FarmData);
-        GameManager.Inst.ReloadState(loadedData.PlayerData);
+        if (loadedData == null) { return; }
+
+        if (TimeManager.Inst != null)
+        {
+            TimeManager.Inst.ReloadState(loadedData.TimeData);
+        }
+        if (FarmManager.Inst != null)
+        {
+            FarmManager.Inst.ReloadState(loadedData.FarmData);
+        }
+        if (GameManager.Inst != null)
+        {
+            GameManager.Inst.ReloadState(loadedData.PlayerData);
+        }
+
+        if (InventoryManager.Inst != null)
+        {
+            InventoryManager.Inst.ReloadState(loadedData.InventoryData);
+        }
     }
     public SaveModel GetSavePreview(int slotIndex)
     {
@@ -68,5 +96,20 @@ public class SaveManager : MonoBehaviour
             return JsonUtility.FromJson<SaveModel>(json);
         }
         return null;
+    }
+    public void FindEmptySlotForNewGame()
+    {
+        for (int i = 1; i <= 5; i++) 
+        {
+            if (!HasSaveData(i)) 
+            {
+                CurrentSlotIndex = i; 
+                Debug.Log($"[SaveManager] 새 게임이 {i}번 슬롯에 할당되었습니다!");
+                return;
+            }
+        }
+
+        CurrentSlotIndex = 1;
+        Debug.LogWarning("[SaveManager] 슬롯이 꽉 차서 1번에 덮어씌웁니다.");
     }
 }

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 
 public class HotbarUI : UIBase
@@ -10,6 +11,10 @@ public class HotbarUI : UIBase
 
     [Header("툴바 설정")]
     [SerializeField] private int HotbarSlotCount = 10;
+
+    [Header("아이템 이름 팝업 연결")]
+    [SerializeField] private TextMeshProUGUI Text_EquippedItemName; 
+    private float _nameHideTimer = 0f;
 
     private List<InventorySlotUI> _hotbarSlotList = new List<InventorySlotUI>();
 
@@ -25,10 +30,27 @@ public class HotbarUI : UIBase
         {
             InventoryManager.Inst.OnInventoryChanged -= RefreshHotbarSlots;
             InventoryManager.Inst.OnInventoryChanged += RefreshHotbarSlots;
+
+            InventoryManager.Inst.OnEquippedItemChanged -= ShowEquippedItemName;
+            InventoryManager.Inst.OnEquippedItemChanged += ShowEquippedItemName;
+
             RefreshHotbarSlots();
         }
 
         SelectSlot(0);
+    }
+
+    private void Update()
+    {
+        if (_nameHideTimer > 0)
+        {
+            _nameHideTimer -= Time.deltaTime;
+
+            if (_nameHideTimer <= 0 && Text_EquippedItemName != null)
+            {
+                Text_EquippedItemName.gameObject.SetActive(false);
+            }
+        }
     }
 
     private void InitHotbarSlots()
@@ -105,5 +127,26 @@ public class HotbarUI : UIBase
         {
             InventoryManager.Inst.ChangeEquippedIndex(index);
         }
+    }
+
+    private void ShowEquippedItemName(ItemModel item)
+    {
+        if (Text_EquippedItemName == null) return;
+
+        if (item == null || string.IsNullOrEmpty(item.ItemDataId) || item.ItemStackCount <= 0)
+        {
+            Text_EquippedItemName.gameObject.SetActive(false);
+            return;
+        }
+
+        string displayName = item.ItemDataId;
+        if (GameDataManager.Inst != null && GameDataManager.Inst.ItemDataList.TryGetValue(item.ItemDataId, out var data))
+        {
+            displayName = data.Name;
+        }
+
+        Text_EquippedItemName.text = displayName;
+        Text_EquippedItemName.gameObject.SetActive(true);
+        _nameHideTimer = 1.0f;
     }
 }

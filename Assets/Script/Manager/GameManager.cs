@@ -47,6 +47,8 @@ public class GameManager : MonoBehaviour
     }
     public void StartNewGame(string playerName, string worldName)
     {
+        SaveManager.Inst.FindEmptySlotForNewGame();
+
         _playerModel.PlayerName = playerName;
         _playerModel.WorldName = worldName;
 
@@ -66,7 +68,6 @@ public class GameManager : MonoBehaviour
         LoadGame(slotIndex); 
 
         UIManager.Inst.CloseContentUI(UIType.RobbyUI);
-        UIManager.Inst.OpenContentUI(UIType.HudUI);
 
         RequestStartGame();
     }
@@ -99,8 +100,6 @@ public class GameManager : MonoBehaviour
     public void ReloadState(PlayerModel data)
     {
         _playerModel = data;
-
-        InventoryManager.Inst.ApplySaveData(_playerModel.Inventory, new ItemModel[10], _playerModel.Gold);
     }
 
     public void RequestStartGame()

@@ -8,6 +8,7 @@ public class SaveModel
     public TimeSaveData TimeData = new TimeSaveData();
     public PlayerModel PlayerData = new PlayerModel();
     public FarmSaveData FarmData = new FarmSaveData();
+    public InventorySaveData InventoryData = new InventorySaveData();
 }
 
 [Serializable]
@@ -25,3 +26,10 @@ public class FarmSaveData
     public List<FarmTileData> FarmTileList;
 }
 
+[Serializable]
+public class InventorySaveData
+{
+    public List<ItemModel> MainInventoryItems = new List<ItemModel>();
+    public ItemModel[] HotbarItems = new ItemModel[10];
+    public int CurrentGold = 0;
+}
