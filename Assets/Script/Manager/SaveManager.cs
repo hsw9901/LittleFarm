@@ -98,18 +98,22 @@ public class SaveManager : MonoBehaviour
         return null;
     }
 
-    public bool FindEmptySlotForNewGame() 
+    public void FindEmptySlotForNewGame() 
     {
         for (int i = 1; i <= 5; i++)
         {
             if (!HasSaveData(i))
             {
                 CurrentSlotIndex = i;
-                return true;
+                return;
             }
         }
         
         Debug.LogWarning("[SaveManager] 모든 슬롯이 꽉 찼습니다!");
-        return false; 
+        return; 
+    }
+    public void SetCurrentSlot(int index)
+    {
+        CurrentSlotIndex = index;
     }
 }

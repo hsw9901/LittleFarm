@@ -47,13 +47,7 @@ public class GameManager : MonoBehaviour
     }
     public void StartNewGame(string playerName, string worldName)
     {
-        bool canStart = SaveManager.Inst.FindEmptySlotForNewGame();
-
-        if (!canStart)
-        {
-            UIManager.Inst.OpenSimplePopup("슬롯이 꽉 찼습니다! 이전 데이터를 삭제해주세요.");
-            return; 
-        }
+        SaveManager.Inst.FindEmptySlotForNewGame();
 
         _playerModel.PlayerName = playerName;
         _playerModel.WorldName = worldName;
@@ -70,7 +64,8 @@ public class GameManager : MonoBehaviour
     public void StartLoadedGame(int slotIndex)
     {
         Debug.Log($"[GameManager] {slotIndex}번 세이브 슬롯 로드 시작!");
-        
+
+        SaveManager.Inst.SetCurrentSlot(slotIndex);
         LoadGame(slotIndex); 
 
         UIManager.Inst.CloseContentUI(UIType.RobbyUI);
@@ -88,6 +83,21 @@ public class GameManager : MonoBehaviour
     {
         SaveManager.Inst.SaveGameFlow();
         Application.Quit();
+    }
+
+    public void SaveAndReturnToLobby()
+    {
+        SaveManager.Inst.SaveGameFlow();
+        Debug.Log("[GameManager] 게임 저장 완료! 로비로 돌아갑니다.");
+
+        UIManager.Inst.CloseAllOpenedPopup();
+        RequestMainMenu();
+
+        
+        if (UIManager.Inst != null)
+        {
+            UIManager.Inst.OpenContentUI(UIType.RobbyUI);
+        }
     }
     public void LoadGame(int slotIndex)
     {

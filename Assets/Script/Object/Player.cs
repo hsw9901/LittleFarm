@@ -41,8 +41,11 @@ public class Player : MonoBehaviour
 
     private void Update()
     {
-        if (!GameStateManager.Inst.IsPlaying)
+        if (GameStateManager.Inst != null && !GameStateManager.Inst.IsPlaying)
         {
+            _moveInput = Vector2.zero;
+            GetComponent<Rigidbody2D>().linearVelocity = Vector2.zero;
+            ChangePlayerState(Player_AnimState.Idle);
             return;
         }
 
@@ -56,6 +59,7 @@ public class Player : MonoBehaviour
 
     private void FixedUpdate()
     {
+        if (GameStateManager.Inst != null && !GameStateManager.Inst.IsPlaying) return;
         Move();
     }
 

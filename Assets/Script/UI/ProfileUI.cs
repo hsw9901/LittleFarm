@@ -84,11 +84,9 @@ public class ProfileUI : UIBase
 
     private void OnClick_SaveAndQuit()
     {
-        Debug.Log("[ProfileUI] 현재 슬롯에 게임을 저장하고 종료합니다!");
-
         if (GameManager.Inst != null)
         {
-            GameManager.Inst.SaveAndEndGame();
+            GameManager.Inst.SaveAndReturnToLobby();
         }
     }
 }

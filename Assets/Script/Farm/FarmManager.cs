@@ -50,7 +50,7 @@ public class FarmManager : MonoBehaviour
         {
             _tiles[tileData.GridPos] = tileData;
 
-            if (tileData.state == TileState.Tilled)
+            if (tileData.state == TileState.Tilled || tileData.state == TileState.Growing)
             {
                 FarmLayer.SetTile((Vector3Int)tileData.GridPos, TilledTile);
             }
