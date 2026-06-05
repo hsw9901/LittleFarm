@@ -44,6 +44,7 @@ public class FarmManager : MonoBehaviour
 
         foreach (var crop in _cropInstances.Values) { Destroy(crop.gameObject); }
         _cropInstances.Clear();
+        HighlightLayer.ClearAllTiles();
 
         foreach (var tileData in data.FarmTileList)
         {
@@ -61,6 +62,13 @@ public class FarmManager : MonoBehaviour
             if (!string.IsNullOrEmpty(tileData.CropId))
             {
                 SpawnCropObject(tileData.GridPos, tileData);
+                if (_cropInstances.TryGetValue(tileData.GridPos, out Crop spawnedCrop))
+                {
+                    if (spawnedCrop.IsReadyToHarvest)
+                    {
+                        HighlightLayer.SetTile((Vector3Int)tileData.GridPos, HighlightTile);
+                    }
+                }
             }
         }
     }
@@ -186,6 +194,10 @@ public class FarmManager : MonoBehaviour
                     {
                         crop.GrowNextDay();
                     }
+                    if (crop.IsReadyToHarvest)
+                    {
+                        HighlightLayer.SetTile((Vector3Int)tile.GridPos, HighlightTile);
+                    }
                 }
             }
             else if (tile.state == TileState.Tilled)
@@ -216,6 +228,8 @@ public class FarmManager : MonoBehaviour
             tile.CropId = "";
             tile.DaysGrown = 0;
             tile.state = (tile.Moisture > 0) ? TileState.Watered : TileState.Tilled;
+
+            HighlightLayer.SetTile((Vector3Int)pos, null);
 
             return true;
         }

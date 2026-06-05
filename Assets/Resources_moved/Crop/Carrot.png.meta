@@ -34,7 +34,7 @@ TextureImporter:
   maxTextureSize: 2048
   textureSettings:
     serializedVersion: 2
-    filterMode: 1
+    filterMode: 0
     aniso: 1
     mipBias: 0
     wrapU: 1
@@ -308,7 +308,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Icon_Seed_Carrot
+      name: Icon_Crop_Carrot
       rect:
         serializedVersion: 2
         x: 48
@@ -374,7 +374,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Icon_Crop_Carrot
+      name: Icon_Seed_Carrot
       rect:
         serializedVersion: 2
         x: 32
@@ -422,8 +422,8 @@ TextureImporter:
       Carrot_6: 814931083
       Carrot_7: 1977769517
       Carrot_8: 101119994
-      Icon_Crop_Carrot: -698999089
-      Icon_Seed_Carrot: -324090619
+      Icon_Crop_Carrot: -324090619
+      Icon_Seed_Carrot: -698999089
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

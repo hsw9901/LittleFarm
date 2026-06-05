@@ -3,12 +3,12 @@ using UnityEngine;
 
 public class ShopNPC : MonoBehaviour
 {
-    [Header("이 상점에서 파는 아이템들")]
+    [Header("상점 판매 상품")]
     public List<string> ItemsForSale;
 
     public void OpenShop()
     {
-        Debug.Log("상점에 어서오세요!");
+        UIManager.Inst.OpenSimplePopup("상점에 어서오세요");
 
         if (UIManager.Inst != null)
         {

@@ -1,4 +1,4 @@
-[
+﻿[
   {
     "Id": "Item_Tool_Hoe_01",
     "Name": "낡은 괭이",
@@ -156,7 +156,7 @@
     "SellPrice": 15
   },
   {
-    "Id": "Item_Seed_Stawberry",
+    "Id": "Item_Seed_Strawberry",
     "Name": "딸기 씨앗",
     "ItemType": "Seed",
     "ItemUseType": "Consumeable",

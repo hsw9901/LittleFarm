@@ -30,10 +30,12 @@ public class ItemEffectManager : MonoBehaviour
             {
                 case "Item_Tool_Hoe_01": 
                     FarmManager.Inst.RequestTillTile(targetPos);
+                    UIManager.Inst.OpenSimplePopup("밭을 갈았습니다.");
                     Debug.Log("밭을 갈았습니다!");
                     break;
                 case "Item_Tool_Wateringcan_01":
                     FarmManager.Inst.RequestWaterTile(targetPos);
+                    UIManager.Inst.OpenSimplePopup("물을 주었습니다.");
                     Debug.Log("물을 주었습니다!");
                     break;
                 case "Item_Tool_Axe_01":
@@ -41,6 +43,7 @@ public class ItemEffectManager : MonoBehaviour
                     {
                         GameManager.Inst.MainPlayer.HitFieldResource(ToolCategory.Axe, currentToolPower);
                     }
+                    UIManager.Inst.OpenSimplePopup($"도끼를 사용했습니다 (적용된 파워: {currentToolPower})");
                     Debug.Log($"도끼를 사용했습니다! (적용된 파워: {currentToolPower})");
                     break;
                 case "Item_Tool_Pickaxe_01":
@@ -48,6 +51,7 @@ public class ItemEffectManager : MonoBehaviour
                     {
                         GameManager.Inst.MainPlayer.HitFieldResource(ToolCategory.Pickaxe, currentToolPower);
                     }
+                    UIManager.Inst.OpenSimplePopup($"곡괭이를 사용했습니다 (적용된 파워: {currentToolPower})");
                     Debug.Log($"곡괭이를 사용했습니다! (적용된 파워: {currentToolPower})");
                     break;
                 default:
@@ -59,26 +63,30 @@ public class ItemEffectManager : MonoBehaviour
         }
         else if (itemData.GetItemUseType() == ItemUseType.Consumeable)
         {
+            if (itemDataId.Contains("Seed"))
+            {
+                bool isPlanted = FarmManager.Inst.RequestPlantSeed(targetPos, itemDataId, 3);
+
+                if (isPlanted)
+                {
+                    Debug.Log($"{itemDataId} 심기 성공!");
+                    return ItemUseResult.Consume;
+                }
+                else
+                {
+                    UIManager.Inst.OpenSimplePopup("씨앗을 심을 수 없는 땅입니다.");
+                    Debug.Log("씨앗을 심을 수 없는 땅입니다.");
+                    return ItemUseResult.Fail;
+                }
+            }
+
             switch (itemDataId)
             {
                 case "Item_Crop_Tomato":
                     Debug.Log("스테미나를 회복했습니다");
-                    break;
-                case "Item_Seed_Tomato":
-                    bool isPlanted = FarmManager.Inst.RequestPlantSeed(targetPos, "Item_Seed_Tomato", 3);
-                    if (isPlanted)
-                    {
-                        Debug.Log("토마토씨앗심기");
-                        return ItemUseResult.Consume;
-                    }
-                    else
-                    {
-                        return ItemUseResult.Fail;
-                    }
+                    return ItemUseResult.Consume;
             }
-            return ItemUseResult.Consume;
         }
-
         return ItemUseResult.Fail;
     }
 }
